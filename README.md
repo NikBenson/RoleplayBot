@@ -7,10 +7,13 @@ For now our features are:
 * A customisable game cycle
 * Messages send with your pattern
 * Custom bot appearance
+
 But we intend to add the following:
 * Food system
 * Welcome messages
 * Player specific messages
+
+Feel free to request features witch are not in this list. We will be pleased by your help.
 
 ## Configuration
 The configuration files are in json format. You will understand it quite fast by looking in the [ExampleConfig](https://github.com/NikBenson/RoleplayBot/ExampleConfig) directory.
