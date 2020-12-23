@@ -16,7 +16,7 @@ But we intend to add the following:
 Feel free to request features witch are not in this list. We will be pleased by your help.
 
 ## Configuration
-The configuration files are in json format. You will understand it quite fast by looking in the [ExampleConfig](https://github.com/NikBenson/RoleplayBot/ExampleConfig) directory.
+The configuration files are in json format. You will understand it quite fast by looking in the [ExampleConfig](https://github.com/NikBenson/RoleplayBot/tree/main/ExampleConfig) directory.
 You will find the documentation of the values in the [Wiki](https://github.com/NikBenson/RoleplayBot/wiki/Configuration).
 
 One special thing you need to do is registering the bot at the [Developer Portal](https://discord.com/developers/).
