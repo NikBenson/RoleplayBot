@@ -1,0 +1,7 @@
+{
+  "channel": 790690647555440664,
+  "startAt": "2020-01-01 00:00:00",
+  "timeDelta": 86400000,
+  "message": "**Wetter Tag %s (%s)**\n\n   **Jahreszeit:** %s\n               **Zeit:** %s Uhr\n     **Helligkeit:** %s\n         **Wetter:** %s\n**Temperatur:** %s\n---------------------------------",
+  "values": ["ingame day", "date now \"dd.MM.yyyy\"", "ingame season", "ingame time", "ingame lightLevel", "ingame weather", "ingame temperature"]
+}

@@ -1,0 +1,57 @@
+{
+  "startedAt": "2020-11-30 01:00:00",
+  "dayLength": 96,
+  "refreshDelay": 24,
+    "seasons": [
+      {
+        "name": "Sommer",
+        "length": 16,
+        "temperatures": [
+        {
+          "name": "Kühl (0)",
+          "probability": 0.1
+        },
+        {
+          "name": "Normal (1)",
+          "probability": 0.4
+        },
+        {
+          "name": "Warm (2)",
+          "probability": 0.5
+        }
+      ],
+      "lightLevels": [
+        {
+          "name": "Dunkelheit",
+          "duration": 1
+        },
+        {
+          "name": "Dämmerung",
+          "duration": 1
+        },
+        {
+          "name": "Tag",
+          "duration": 1
+        },
+        {
+          "name": "Dämmerung",
+          "duration": 1
+        }
+      ],
+      "weathers": [
+        {
+          "name": "Regen",
+          "probability": 0.2
+        },
+        {
+          "name": "Windig",
+          "probability": 0.2
+        },
+        {
+          "name": "Trocken",
+          "probability": 0.6
+        }
+      ]
+    }
+  ]
+}

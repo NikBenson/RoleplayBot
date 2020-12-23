@@ -1,0 +1,119 @@
+{
+  "startedAt": "2020-11-30 18:00:00",
+  "dayLength": 96,
+  "refreshDelay": 24,
+  "seasons": [
+    {
+      "name": "Sommer",
+      "length": 16,
+      "temperatures": [
+        {
+          "id": 0,
+          "name": "Kühl",
+          "probability": 0.1
+        },
+        {
+          "id": 1,
+          "name": "Normal",
+          "probability": 0.4
+        },
+        {
+          "id": 2,
+          "name": "Warm",
+          "probability": 0.5
+        }
+      ],
+      "lightLevels": [
+        {
+          "name": "Dunkelheit",
+          "duration": 1
+        },
+        {
+          "name": "Dämmerung",
+          "duration": 1
+        },
+        {
+          "name": "Tag",
+          "duration": 1
+        },
+        {
+          "name": "Dämmerung",
+          "duration": 1
+        }
+      ],
+      "weathers": [
+        {
+          "id": 0,
+          "name": "Regen",
+          "probability": 0.2
+        },
+        {
+          "id": 1,
+          "name": "Windig",
+          "probability": 0.2
+        },
+        {
+          "id": 2,
+          "name": "Trocken",
+          "probability": 0.6
+        }
+      ]
+    },
+    {
+      "name": "Winter",
+      "length": 16,
+      "temperatures": [
+        {
+          "id": 0,
+          "name": "Kühl",
+          "probability": 0.5
+        },
+        {
+          "id": 1,
+          "name": "Normal",
+          "probability": 0.4
+        },
+        {
+          "id": 2,
+          "name": "Warm",
+          "probability": 0.1
+        }
+      ],
+      "lightLevels": [
+        {
+          "name": "Dunkelheit",
+          "duration": 1
+        },
+        {
+          "name": "Dämmerung",
+          "duration": 1
+        },
+        {
+          "name": "Tag",
+          "duration": 1
+        },
+        {
+          "name": "Dämmerung",
+          "duration": 1
+        }
+      ],
+      "weathers": [
+        {
+          "id": 0,
+          "name": "Regen",
+          "probability": 0.2
+        },
+        {
+          "id": 1,
+          "name": "Windig",
+          "probability": 0.2
+        },
+        {
+          "id": 3,
+          "name": "Schnee",
+          "probability": 0.6
+        }
+      ]
+    }
+  ]
+}
