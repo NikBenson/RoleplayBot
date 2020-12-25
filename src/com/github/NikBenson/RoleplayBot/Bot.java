@@ -123,7 +123,7 @@ public class Bot {
 			values[i] = (String) valuesJSON.get(i);
 		}
 
-		MessageFormatter messageFormatter = new MessageFormatter<GeneralContext>(message, values);
+		MessageFormatter<GeneralContext> messageFormatter = new MessageFormatter<GeneralContext>(message, values);
 		new RepeatedMessage(channel, messageFormatter, startAt, timeDelta);
 	}
 }

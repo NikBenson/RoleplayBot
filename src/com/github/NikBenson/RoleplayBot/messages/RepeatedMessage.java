@@ -10,12 +10,12 @@ import java.util.TimerTask;
 
 public class RepeatedMessage extends TimerTask {
 	private final TextChannel channel;
-	private final MessageFormatter message;
+	private final MessageFormatter<GeneralContext> message;
 
 	private final Date startingTime;
 	private final long period;
 
-	public RepeatedMessage(@NotNull TextChannel channel, @NotNull MessageFormatter message, @NotNull Date startingTime, @NotNull long period) {
+	public RepeatedMessage(@NotNull TextChannel channel, @NotNull MessageFormatter<GeneralContext> message, @NotNull Date startingTime, @NotNull long period) {
 		this.channel = channel;
 		this.message = message;
 		this.startingTime = startingTime;

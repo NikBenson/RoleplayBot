@@ -21,6 +21,7 @@ You will find the documentation of the values in the [Wiki](https://github.com/N
 
 One special thing you need to do is registering the bot at the [Developer Portal](https://discord.com/developers/).
 Please generate a token for your bot and add it to your botinfo.json.
+You also have to enable Bot > Privileged Gateway Intents > presence intent.
 
 The last step to go is to start the bot. In order to do, so you have to run the RoleplayBot.jar from the wanted release and execute it with the following command:
 ```shell
