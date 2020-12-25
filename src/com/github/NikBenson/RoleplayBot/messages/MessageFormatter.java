@@ -1,8 +1,9 @@
 package com.github.NikBenson.RoleplayBot.messages;
 
 import com.github.NikBenson.RoleplayBot.messages.commands.Command;
+import com.github.NikBenson.RoleplayBot.messages.commands.Context;
 
-public class MessageFormatter {
+public class MessageFormatter<E extends Context> {
 	private String unformattedMessage;
 	private Command[] commandHandlers;
 	private String[] commands;
@@ -19,20 +20,20 @@ public class MessageFormatter {
 		}
 	}
 
-	public String createMessage() {
-			return formatMessage();
+	public String createMessage(E context) {
+			return formatMessage(context);
 	}
 
-	private String formatMessage() {
-		return String.format(unformattedMessage, executeCommands());
+	private String formatMessage(E context) {
+		return String.format(unformattedMessage, executeCommands(context));
 	}
 
-	private String[] executeCommands() {
+	private String[] executeCommands(E context) {
 		String[] executedCommands = new String[commandHandlers.length];
 
 		for(int i = 0; i < commandHandlers.length; i++) {
 			if (commandHandlers[i] != null) {
-				executedCommands[i] = commandHandlers[i].execute(commands[i]);
+				executedCommands[i] = commandHandlers[i].execute(commands[i], context);
 			}
 			else {
 				System.out.println("Could not find any command matching: " + commands[i]);

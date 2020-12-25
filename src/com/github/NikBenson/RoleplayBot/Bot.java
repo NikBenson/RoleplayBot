@@ -2,12 +2,17 @@ package com.github.NikBenson.RoleplayBot;
 
 import com.github.NikBenson.RoleplayBot.messages.MessageFormatter;
 import com.github.NikBenson.RoleplayBot.messages.RepeatedMessage;
+import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
 import com.github.NikBenson.RoleplayBot.messages.commands.*;
+import com.github.NikBenson.RoleplayBot.messages.commands.context.general.*;
+import com.github.NikBenson.RoleplayBot.messages.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.roleplay.GameManager;
+import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.json.simple.JSONArray;
@@ -37,6 +42,7 @@ public class Bot {
 		Command.register(new IngameWeather());
 		Command.register(new IngameTemperarture());
 		Command.register(new IngameTime());
+		Command.register(new PlayerName());
 	}
 
 
@@ -47,6 +53,16 @@ public class Bot {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
+		}
+
+		File welcomeMessageConfigurationFile = new File(configurationDirectoryPath, "welcomemessage.json");
+
+		if(welcomeMessageConfigurationFile.exists()) {
+			try {
+				WelcomeMessenger.init(jda, getJson(welcomeMessageConfigurationFile));
+			} catch (Exception e) {
+				System.out.println("No welcome message configuration found.");
+			}
 		}
 
 		GameManager.setInstance(configurationDirectoryPath);
@@ -60,14 +76,16 @@ public class Bot {
 		builder.disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
 		builder.setBulkDeleteSplittingEnabled(false);
 		builder.setCompression(Compression.NONE);
+		builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+		builder.addEventListeners(new PlayerManager());
 
-		if(params.get("playing") != null) {
+		if (params.get("playing") != null) {
 			builder.setActivity(Activity.playing((String) params.get("playing")));
-		} else if(params.get("listening") != null) {
+		} else if (params.get("listening") != null) {
 			builder.setActivity(Activity.playing((String) params.get("listening")));
-		} else if(params.get("streaming") != null) {
+		} else if (params.get("streaming") != null) {
 			builder.setActivity(Activity.playing((String) params.get("streaming")));
-		} else if(params.get("watching") != null) {
+		} else if (params.get("watching") != null) {
 			builder.setActivity(Activity.playing((String) params.get("watching")));
 		}
 
@@ -78,7 +96,7 @@ public class Bot {
 
 	private void registerRepeatedMessages() {
 		File messagesDirectory = new File(configurationDirectoryPath, "RepeatedMessages");
-		if(messagesDirectory.exists()) {
+		if (messagesDirectory.exists()) {
 			for (File messageFile : messagesDirectory.listFiles()) {
 				loadRepeatedMessageFromFile(messageFile);
 			}
@@ -101,12 +119,11 @@ public class Bot {
 		String message = (String) json.get("message");
 		JSONArray valuesJSON = (JSONArray) json.get("values");
 		String[] values = new String[valuesJSON.size()];
-		for(int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length; i++) {
 			values[i] = (String) valuesJSON.get(i);
 		}
 
-		MessageFormatter messageFormatter = new MessageFormatter(message, values);
+		MessageFormatter messageFormatter = new MessageFormatter<GeneralContext>(message, values);
 		new RepeatedMessage(channel, messageFormatter, startAt, timeDelta);
 	}
-
 }

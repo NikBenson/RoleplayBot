@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Command {
+public abstract class Command<E extends Context> {
 	private static final List<Command> all = new LinkedList<>();
 
 	public static Command find(@NotNull String query) {
@@ -23,5 +23,5 @@ public abstract class Command {
 	}
 
 	public abstract String getRegex();
-	public abstract String execute(String command);
+	public abstract String execute(String command, E context);
 }

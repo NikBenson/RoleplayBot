@@ -1,5 +1,6 @@
 package com.github.NikBenson.RoleplayBot.messages;
 
+import com.github.NikBenson.RoleplayBot.messages.commands.context.general.GeneralContext;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +36,6 @@ public class RepeatedMessage extends TimerTask {
 
 	@Override
 	public void run() {
-		channel.sendMessage(message.createMessage()).queue();
+		channel.sendMessage(message.createMessage(new GeneralContext())).queue();
 	}
 }
