@@ -59,7 +59,7 @@ public class Bot {
 
 		if(welcomeMessageConfigurationFile.exists()) {
 			try {
-				WelcomeMessenger.init(jda, getJson(welcomeMessageConfigurationFile));
+				WelcomeMessenger.init(getJson(welcomeMessageConfigurationFile));
 			} catch (Exception e) {
 				System.out.println("No welcome message configuration found.");
 			}

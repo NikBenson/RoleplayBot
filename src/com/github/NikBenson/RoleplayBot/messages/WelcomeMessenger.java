@@ -8,18 +8,17 @@ import org.json.simple.JSONObject;
 
 public class WelcomeMessenger {
 	private static MessageFormatter<UserContext> messageFormatter;
-	private static JDA jda;
+	private static boolean enabled = false;
 
 	public static void sendTo(User user) {
-		user.openPrivateChannel().queue(channel -> {
-			channel.sendMessage(messageFormatter.createMessage(new UserContext(user))).queue();
-		});
+		if(enabled) {
+			user.openPrivateChannel().queue(channel -> {
+				channel.sendMessage(messageFormatter.createMessage(new UserContext(user))).queue();
+			});
+		}
 	}
 
-	public static void init(JDA jda, JSONObject configuration) {
-		WelcomeMessenger.jda = jda;
-
-
+	public static void init(JSONObject configuration) {
 		String message = (String) configuration.get("message");
 		JSONArray valuesJSON = (JSONArray) configuration.get("values");
 		String[] values = new String[valuesJSON.size()];
@@ -28,6 +27,8 @@ public class WelcomeMessenger {
 		}
 
 		messageFormatter = new MessageFormatter<UserContext>(message, values);
+
+		enabled = true;
 	}
 
 	private WelcomeMessenger() {}
