@@ -51,7 +51,7 @@ public class GameManager {
 
 		System.out.println("read config done!");
 
-		startedAt = json.containsKey("startedAt")? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startedAt")) : Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+		startedAt = json.containsKey("startedAt")? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startedAt")) : Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
 		dayLengthInHours = (long) json.getOrDefault("dayLength", 24l);
 		refreshDelayInHours = (long) json.getOrDefault("refreshDelay", 6l);
 
@@ -75,13 +75,13 @@ public class GameManager {
 	private void registerRefreshTimers() {
 		Timer timer = new Timer();
 
-		Date disabledUntil = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().plusSeconds(5));
+		Date disabledUntil = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant().plusSeconds(5));
 
 		long dayLengthInMilliseconds = dayLengthInHours *60*60*1000;
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+				Date now = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
 				if(now.getTime() > disabledUntil.getTime()) {
 					incrementDay();
 				}
@@ -92,7 +92,7 @@ public class GameManager {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+				Date now = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
 				if(now.getTime() > disabledUntil.getTime()) {
 					Season.update();
 				}
@@ -103,7 +103,7 @@ public class GameManager {
 		setDay(day + 1);
 	}
 	private void calculateDay() {
-		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
 
 		long deltaInMillisecond = now.getTime() - startedAt.getTime();
 		long deltaInHours = deltaInMillisecond / (1000 * 60 * 60);
@@ -113,16 +113,11 @@ public class GameManager {
 		long millisecondOfDay = (long) (hourOfDay * (1000 * 60 * 60));
 		long dayLengthInMilliseconds = dayLengthInHours * (1000 * 60 * 60);
 		currentDayStartedAt = new Date(now.getTime() - (dayLengthInMilliseconds - millisecondOfDay));
-		//TODO the line above is really buggy and no idea how to fix it. But will not matter after the first IG day.
-
-		System.out.println(startedAt);
-		System.out.printf("now: %tT, HOD: %f, DLM: %d, MOD: %d%n", now, hourOfDay, dayLengthInMilliseconds, millisecondOfDay);
-		System.out.println(currentDayStartedAt);
 	}
 	private void setDay(long day) {
 		this.day = day;
 
-		currentDayStartedAt = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+		currentDayStartedAt = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
 	}
 
 	public long getDay() {
@@ -133,7 +128,7 @@ public class GameManager {
 		return getTime("HH:mm");
 	}
 	public String getTime(String pattern) {
-		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
 
 		long deltaInMillisecond = now.getTime() - currentDayStartedAt.getTime();
 		long dayLengthInMilliseconds = dayLengthInHours * (1000 * 60 *60);
