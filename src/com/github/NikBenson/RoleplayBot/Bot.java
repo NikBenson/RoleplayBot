@@ -1,12 +1,15 @@
 package com.github.NikBenson.RoleplayBot;
 
+import com.github.NikBenson.RoleplayBot.commands.context.server.Storage;
 import com.github.NikBenson.RoleplayBot.messages.MessageFormatter;
 import com.github.NikBenson.RoleplayBot.messages.RepeatedMessage;
 import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
-import com.github.NikBenson.RoleplayBot.messages.commands.*;
-import com.github.NikBenson.RoleplayBot.messages.commands.context.general.*;
-import com.github.NikBenson.RoleplayBot.messages.commands.context.user.PlayerName;
+import com.github.NikBenson.RoleplayBot.commands.*;
+import com.github.NikBenson.RoleplayBot.commands.context.GeneralContext;
+import com.github.NikBenson.RoleplayBot.commands.context.general.*;
+import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.roleplay.GameManager;
+import com.github.NikBenson.RoleplayBot.serverCommands.CommandManager;
 import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -43,6 +46,7 @@ public class Bot {
 		Command.register(new IngameTemperarture());
 		Command.register(new IngameTime());
 		Command.register(new PlayerName());
+		Command.register(new Storage());
 	}
 
 
@@ -77,7 +81,7 @@ public class Bot {
 		builder.setBulkDeleteSplittingEnabled(false);
 		builder.setCompression(Compression.NONE);
 		builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
-		builder.addEventListeners(new PlayerManager());
+		builder.addEventListeners(new PlayerManager(), new CommandManager());
 
 		if (params.get("playing") != null) {
 			builder.setActivity(Activity.playing((String) params.get("playing")));

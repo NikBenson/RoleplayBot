@@ -1,6 +1,6 @@
 package com.github.NikBenson.RoleplayBot.messages;
 
-import com.github.NikBenson.RoleplayBot.messages.commands.context.general.GeneralContext;
+import com.github.NikBenson.RoleplayBot.commands.context.GeneralContext;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.jetbrains.annotations.NotNull;
 

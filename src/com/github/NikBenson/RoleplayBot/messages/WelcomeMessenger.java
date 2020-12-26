@@ -1,6 +1,6 @@
 package com.github.NikBenson.RoleplayBot.messages;
 
-import com.github.NikBenson.RoleplayBot.messages.commands.context.user.UserContext;
+import com.github.NikBenson.RoleplayBot.commands.context.UserContext;
 import net.dv8tion.jda.api.entities.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
