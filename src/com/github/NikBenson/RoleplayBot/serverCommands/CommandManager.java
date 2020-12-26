@@ -14,8 +14,6 @@ public class CommandManager extends ListenerAdapter {
 	@SubscribeEvent
 	@Override
 	public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-		System.out.println("test1.1.1");
-
 		if(!event.getAuthor().isBot()) {
 			Message message = event.getMessage();
 			String content = message.getContentRaw();
@@ -27,8 +25,6 @@ public class CommandManager extends ListenerAdapter {
 	}
 
 	private void onCommand(MessageReceivedEvent event) {
-		System.out.println("test2.1.1");
-
 		String query = event.getMessage().getContentRaw().substring(1);
 
 		Command<ServerContext> command = Command.find(query);
