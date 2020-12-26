@@ -8,6 +8,7 @@ For now our features are:
 * Messages send with your pattern
 * Custom bot appearance
 * Welcome messages
+* A storage system for every text channel
 
 But we intend to add the following:
 * Food system
