@@ -36,11 +36,11 @@ public class Storage extends Command<ServerContext> {
 	}
 
 	private String listContent(TextChannel channel) {
-		Map<String, Integer> storage = StorageManager.getStorageFrom(channel);
+		Map<String, Long> storage = StorageManager.getStorageFrom(channel);
 		String list = "";
 
 		for(String item : storage.keySet()) {
-			int count = storage.get(item);
+			long count = storage.get(item);
 
 			list += String.format("**%s**: %d\n", item, count);
 		}

@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.User;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserContext extends Context {
+public class UserContext extends GeneralContext {
 	private Map<String, Object> params = new HashMap<>();
 
 	public UserContext(User user) {
