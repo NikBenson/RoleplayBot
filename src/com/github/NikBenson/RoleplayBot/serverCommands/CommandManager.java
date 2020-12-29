@@ -44,15 +44,19 @@ public class CommandManager extends ListenerAdapter {
 	@SubscribeEvent
 	@Override
 	public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
-		Message message = event.getMessage();
-		String content = message.getContentRaw();
+		if(!event.getAuthor().isBot()) {
+			Message message = event.getMessage();
+			String content = message.getContentRaw();
 
-		if(content.startsWith("!")) {
-			onPrivateCommand(event);
-		} else {
-			Player player = PlayerManager.getInstance().getPlayer(event.getAuthor());
-			if (player.isCreatingCharacter()) {
-				player.characterCreationAnswer(content);
+			if (content.startsWith("!")) {
+				onPrivateCommand(event);
+			} else {
+				Player player = PlayerManager.getInstance().getPlayerOrCreate(event.getAuthor());
+				if (player.isCreatingCharacter()) {
+					PrivateChannel channel = event.getChannel();
+
+					channel.sendMessage(player.characterCreationAnswer(content)).queue();
+				}
 			}
 		}
 	}

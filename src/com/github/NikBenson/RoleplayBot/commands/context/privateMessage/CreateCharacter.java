@@ -17,6 +17,6 @@ public class CreateCharacter extends Command<PrivateContext> {
 	public String execute(String command, PrivateContext context) {
 		User user = ((PrivateMessageReceivedEvent) context.getParams().get("event")).getAuthor();
 
-		return PlayerManager.getInstance().getPlayer(user).startCharacterCreation();
+		return PlayerManager.getInstance().getPlayerOrCreate(user).startCharacterCreation();
 	}
 }

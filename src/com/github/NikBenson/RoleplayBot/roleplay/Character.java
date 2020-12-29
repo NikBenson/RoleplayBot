@@ -45,6 +45,10 @@ public class Character {
 		this.sheet = sheet;
 	}
 
+	public Skills getSkills() {
+		return skills;
+	}
+
 	public JSONObject getJson() {
 		JSONObject json = new JSONObject();
 

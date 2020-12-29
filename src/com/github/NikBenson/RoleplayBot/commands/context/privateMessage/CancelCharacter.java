@@ -16,7 +16,7 @@ public class CancelCharacter extends Command<PrivateContext> {
 	public String execute(String command, PrivateContext context) {
 		User user = ((PrivateMessageReceivedEvent) context.getParams().get("event")).getAuthor();
 
-		PlayerManager.getInstance().getPlayer(user).cancelCharacterCreation();
+		PlayerManager.getInstance().getPlayerOrCreate(user).cancelCharacterCreation();
 
 		return "Canceled!";
 	}
