@@ -1,22 +1,19 @@
 package com.github.NikBenson.RoleplayBot;
 
-import com.github.NikBenson.RoleplayBot.commands.context.PrivateContext;
-import com.github.NikBenson.RoleplayBot.commands.context.ServerContext;
-import com.github.NikBenson.RoleplayBot.commands.context.UserContext;
+import com.github.NikBenson.RoleplayBot.commands.Command;
+import com.github.NikBenson.RoleplayBot.commands.context.Context;
+import com.github.NikBenson.RoleplayBot.commands.context.general.*;
 import com.github.NikBenson.RoleplayBot.commands.context.privateMessage.CancelCharacter;
 import com.github.NikBenson.RoleplayBot.commands.context.privateMessage.CreateCharacter;
 import com.github.NikBenson.RoleplayBot.commands.context.server.Shutdown;
 import com.github.NikBenson.RoleplayBot.commands.context.server.Skill;
 import com.github.NikBenson.RoleplayBot.commands.context.server.Storage;
+import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.messages.MessageFormatter;
 import com.github.NikBenson.RoleplayBot.messages.RepeatedMessage;
 import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
-import com.github.NikBenson.RoleplayBot.commands.*;
-import com.github.NikBenson.RoleplayBot.commands.context.GeneralContext;
-import com.github.NikBenson.RoleplayBot.commands.context.general.*;
-import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
-import com.github.NikBenson.RoleplayBot.roleplay.*;
 import com.github.NikBenson.RoleplayBot.roleplay.Character;
+import com.github.NikBenson.RoleplayBot.roleplay.*;
 import com.github.NikBenson.RoleplayBot.serverCommands.CommandManager;
 import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.JDA;
@@ -52,19 +49,19 @@ public class Bot {
 		new Bot(args[0]);
 	}
 	private static void registerCommands() {
-		Command.register(GeneralContext.class, new DateNow());
-		Command.register(GeneralContext.class, new IngameDay());
-		Command.register(GeneralContext.class, new IngameSeason());
-		Command.register(GeneralContext.class, new IngameLightLevel());
-		Command.register(GeneralContext.class, new IngameWeather());
-		Command.register(GeneralContext.class, new IngameTemperarture());
-		Command.register(GeneralContext.class, new IngameTime());
-		Command.register(UserContext.class, new PlayerName());
-		Command.register(ServerContext.class, new Storage());
-		Command.register(ServerContext.class, new Shutdown());
-		Command.register(PrivateContext.class, new CreateCharacter());
-		Command.register(PrivateContext.class, new CancelCharacter());
-		Command.register(ServerContext.class, new Skill());
+		Command.register(new DateNow());
+		Command.register(new IngameDay());
+		Command.register(new IngameSeason());
+		Command.register(new IngameLightLevel());
+		Command.register(new IngameWeather());
+		Command.register(new IngameTemperarture());
+		Command.register(new IngameTime());
+		Command.register(new PlayerName());
+		Command.register(new Storage());
+		Command.register(new Shutdown());
+		Command.register(new CreateCharacter());
+		Command.register(new CancelCharacter());
+		Command.register(new Skill());
 	}
 
 
@@ -211,7 +208,7 @@ public class Bot {
 			values[i] = (String) valuesJSON.get(i);
 		}
 
-		MessageFormatter<GeneralContext> messageFormatter = new MessageFormatter<GeneralContext>(message, values);
+		MessageFormatter<Context> messageFormatter = new MessageFormatter<>(message, values);
 		new RepeatedMessage(channel, messageFormatter, startAt, timeDelta);
 	}
 }

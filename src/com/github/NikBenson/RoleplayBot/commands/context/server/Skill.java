@@ -12,6 +12,11 @@ import java.util.Map;
 
 public class Skill extends Command<ServerContext> {
 	@Override
+	public Class<ServerContext> getContext() {
+		return ServerContext.class;
+	}
+
+	@Override
 	public String getRegex() {
 		return "skill [a-z]*( add)?";
 	}

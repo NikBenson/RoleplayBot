@@ -3,34 +3,68 @@ package com.github.NikBenson.RoleplayBot.commands;
 import com.github.NikBenson.RoleplayBot.commands.context.Context;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Command<E extends Context> {
-	private static final Map<Class, List<Command>> all = new HashMap<>();
+	private static final Node<Context> allHead = new Node<>(Context.class);
 
-	public static <T extends Context> Command<T> find(Class<T> context, @NotNull String query) {
-		for (Command command : all.get(context)) {
-			if(query.matches(command.getRegex())) {
-				return command;
+	private static class Node<T extends Context> {
+		private final Class<T> context;
+		private final List<Node<T>> children = new LinkedList<>();
+		private final List<Command<T>> commands = new LinkedList<>();
+
+		public Node(Class<T> context) {
+			this.context = context;
+		}
+
+		public void addCommand(Command<T> command) {
+			if(this.context.equals(context)) {
+				commands.add(command);
+			} else {
+				boolean addedToChild = false;
+				for(Node child : children) {
+					if(command.getContext().isNestmateOf(child.context)) {
+						child.addCommand(command);
+						addedToChild = true;
+					}
+				}
+				if(addedToChild) {
+					Node<T> newNode = new Node<>(command.getContext());
+					newNode.addCommand(command);
+					children.add(newNode);
+				}
 			}
 		}
-		return null;
+
+		public Command<T> findCommand(Class<T> context, String query) {
+			for(Node<T> child : children) {
+				if(child.context.isNestmateOf(context)) {
+					Command<T> found = child.findCommand(context, query);
+					if (found != null) {
+						return found;
+					}
+				}
+			}
+
+			for (Command<T> command : commands) {
+				if(query.matches(command.getRegex())) {
+					return command;
+				}
+			}
+			return null;
+		}
 	}
 
-	public static <T extends Context> void register(Class<T> context, @NotNull Command<T> command) {
-		if(all.containsKey(context)) {
-			all.put(context, new LinkedList<>());
-		}
-
-		for (Command existing : all.get(context)) {
-			if(command.getClass().equals(existing.getClass())) return;
-		}
-
-		all.get(context).add(command);
+	public static <T extends Context> Command<T> find(Class<T> context, @NotNull String query) {
+		return (Command<T>) allHead.findCommand((Class<Context>) context, query);
 	}
+
+	public static <T extends Context> void register(@NotNull Command<T> command) {
+		allHead.addCommand((Command<Context>) command);
+	}
+
+	public abstract Class<E> getContext();
 
 	public abstract String getRegex();
 	public abstract String execute(String command, E context);

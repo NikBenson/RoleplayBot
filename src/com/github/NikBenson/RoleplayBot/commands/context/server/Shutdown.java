@@ -12,6 +12,11 @@ import java.time.OffsetDateTime;
 
 public class Shutdown extends Command<ServerContext> {
 	@Override
+	public Class<ServerContext> getContext() {
+		return ServerContext.class;
+	}
+
+	@Override
 	public String getRegex() {
 		return "shutdown";
 	}
