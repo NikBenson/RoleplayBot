@@ -8,6 +8,11 @@ import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
 public class CancelCharacter extends Command<PrivateContext> {
 	@Override
+	public Class<PrivateContext> getContext() {
+		return PrivateContext.class;
+	}
+
+	@Override
 	public String getRegex() {
 		return "cancel character";
 	}

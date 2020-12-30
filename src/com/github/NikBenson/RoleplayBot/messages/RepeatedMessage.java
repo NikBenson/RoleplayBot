@@ -1,6 +1,6 @@
 package com.github.NikBenson.RoleplayBot.messages;
 
-import com.github.NikBenson.RoleplayBot.commands.context.GeneralContext;
+import com.github.NikBenson.RoleplayBot.commands.context.Context;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,12 +10,12 @@ import java.util.TimerTask;
 
 public class RepeatedMessage extends TimerTask {
 	private final TextChannel channel;
-	private final MessageFormatter<GeneralContext> message;
+	private final MessageFormatter<Context> message;
 
 	private final Date startingTime;
 	private final long period;
 
-	public RepeatedMessage(@NotNull TextChannel channel, @NotNull MessageFormatter<GeneralContext> message, @NotNull Date startingTime, @NotNull long period) {
+	public RepeatedMessage(@NotNull TextChannel channel, @NotNull MessageFormatter<Context> message, @NotNull Date startingTime, @NotNull long period) {
 		this.channel = channel;
 		this.message = message;
 		this.startingTime = startingTime;
@@ -36,6 +36,6 @@ public class RepeatedMessage extends TimerTask {
 
 	@Override
 	public void run() {
-		channel.sendMessage(message.createMessage(new GeneralContext())).queue();
+		channel.sendMessage(message.createMessage(new Context())).queue();
 	}
 }

@@ -33,20 +33,32 @@ public class Character {
 	}
 
 	private Skills skills;
+	private Team team;
 	private Map<String, String> sheet;
 
 	public Character(JSONObject json) {
 		skills = new Skills((JSONObject) json.get("skills"));
 		sheet = (Map<String, String>) json.get("sheet");
+		team = Team.findTeam((String) json.get("team"));
 	}
 
-	public Character(Map<String, String> sheet, boolean newMarker) {
+	public Character(Map<String, String> sheet, Team team) {
 		skills = new Skills();
 		this.sheet = sheet;
+		this.team = team;
+
+		team.registerCharacter(this);
 	}
 
 	public Skills getSkills() {
 		return skills;
+	}
+
+	public Map<String, String> getSheet() {
+		return sheet;
+	}
+	public String getAttribute(String name) {
+		return sheet.get(name);
 	}
 
 	public JSONObject getJson() {
@@ -54,6 +66,7 @@ public class Character {
 
 		json.put("skills", skills.getSkills());
 		json.put("sheet", sheet);
+		json.put("team", team.getName());
 
 		return json;
 	}

@@ -2,6 +2,7 @@ package com.github.NikBenson.RoleplayBot.users;
 
 import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
 import com.github.NikBenson.RoleplayBot.roleplay.Character;
+import com.github.NikBenson.RoleplayBot.roleplay.Team;
 import net.dv8tion.jda.api.entities.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,6 +17,7 @@ public class Player {
 
 	private int characterCreationPhase = -1;
 	private Map<String, String> creatingCharacterSheet;
+	private Team creatingCharacterTeam;
 
 	private final String userId;
 
@@ -43,20 +45,33 @@ public class Player {
 	public String startCharacterCreation() {
 		characterCreationPhase = 0;
 		creatingCharacterSheet = new JSONObject();
-		return Character.getSheetQuestion(characterCreationPhase);
+		return Team.getQuestion();
 	}
 	public void cancelCharacterCreation() {
 		characterCreationPhase = -1;
 		creatingCharacterSheet = null;
+		creatingCharacterTeam = null;
 	}
 	public String characterCreationAnswer(String answer) {
-		creatingCharacterSheet.put(Character.getSheetAttribute(characterCreationPhase), answer);
+		if(creatingCharacterTeam == null) {
+			creatingCharacterTeam = Team.findTeam(answer);
 
-		if(Character.getSheetAttribute(++characterCreationPhase) != null) {
-			return Character.getSheetQuestion(characterCreationPhase);
+			if(creatingCharacterTeam != null) {
+				return Character.getSheetQuestion(characterCreationPhase);
+			} else {
+				return "Invalid team. Please try again!";
+			}
 		} else {
-			characters.add(new Character(creatingCharacterSheet, true));
-			return "finished!";
+			creatingCharacterSheet.put(Character.getSheetAttribute(characterCreationPhase), answer);
+			characterCreationPhase++;
+
+			if (Character.getSheetAttribute(characterCreationPhase) != null) {
+				return Character.getSheetQuestion(characterCreationPhase);
+			} else {
+				characters.add(new Character(creatingCharacterSheet, creatingCharacterTeam));
+				cancelCharacterCreation();
+				return "finished!";
+			}
 		}
 	}
 	public boolean isCreatingCharacter() {
