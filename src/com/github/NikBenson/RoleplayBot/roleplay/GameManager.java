@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.github.NikBenson.RoleplayBot.json.JSONFileReader.getJson;
+import static com.github.NikBenson.RoleplayBot.json.ConfigLoader.readJsonFromFile;
 
 public class GameManager {
 	private static GameManager instance;
@@ -64,7 +64,7 @@ public class GameManager {
 		File file = new File(configurationDirectoryPath, "gameconfig.json");
 		if(file.exists()) {
 			try {
-				return getJson(file);
+				return readJsonFromFile(file);
 			} catch (Exception e) {
 				System.out.println("Could not load gameconfig.json!");
 				e.printStackTrace();

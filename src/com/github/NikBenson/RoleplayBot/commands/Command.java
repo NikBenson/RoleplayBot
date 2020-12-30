@@ -20,7 +20,9 @@ public abstract class Command<E extends Context> {
 
 		public void addCommand(Command<T> command) {
 			if(this.context.equals(context)) {
-				commands.add(command);
+				if(!commands.contains(command)) {
+					commands.add(command);
+				}
 			} else {
 				boolean addedToChild = false;
 				for(Node child : children) {
@@ -29,7 +31,7 @@ public abstract class Command<E extends Context> {
 						addedToChild = true;
 					}
 				}
-				if(addedToChild) {
+				if(!addedToChild) {
 					Node<T> newNode = new Node<>(command.getContext());
 					newNode.addCommand(command);
 					children.add(newNode);

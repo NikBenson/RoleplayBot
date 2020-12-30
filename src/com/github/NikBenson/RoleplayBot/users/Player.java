@@ -57,6 +57,7 @@ public class Player {
 			creatingCharacterTeam = Team.findTeam(answer);
 
 			if(creatingCharacterTeam != null) {
+				System.out.println(String.format("%d => %s", characterCreationPhase, Character.getSheetQuestion(characterCreationPhase)));
 				return Character.getSheetQuestion(characterCreationPhase);
 			} else {
 				return "Invalid team. Please try again!";

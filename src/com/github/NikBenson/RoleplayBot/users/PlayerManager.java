@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.github.NikBenson.RoleplayBot.json.JSONFileReader.getJson;
+import static com.github.NikBenson.RoleplayBot.json.ConfigLoader.readJsonFromFile;
 
 public class PlayerManager extends ListenerAdapter {
 	private static PlayerManager instance;
@@ -43,7 +43,7 @@ public class PlayerManager extends ListenerAdapter {
 
 		try {
 			if(configurationFile.exists()) {
-				JSONArray json = (JSONArray) getJson(configurationFile).get("players");
+				JSONArray json = (JSONArray) readJsonFromFile(configurationFile).get("players");
 
 				for (int i = 0; i < json.size(); i++) {
 					JSONObject currentJson = (JSONObject) json.get(i);

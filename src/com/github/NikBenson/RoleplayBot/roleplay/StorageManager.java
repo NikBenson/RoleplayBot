@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.github.NikBenson.RoleplayBot.json.JSONFileReader.getJson;
+import static com.github.NikBenson.RoleplayBot.json.ConfigLoader.readJsonFromFile;
 
 public class StorageManager extends ListenerAdapter {
 	private static Map<TextChannel, Map<String, Long>> storages = new HashMap<>();
@@ -69,7 +69,7 @@ public class StorageManager extends ListenerAdapter {
 		Files.writeString(Path.of(file.getPath()), storagesJson.toJSONString());
 	}
 	public static void loadFrom(File file, JDA jda) throws IOException, ParseException {
-		JSONObject storagesJson = getJson(file);
+		JSONObject storagesJson = readJsonFromFile(file);
 
 		for(Object channelId : storagesJson.keySet()) {
 			TextChannel channel = jda.getTextChannelById((String) channelId);
