@@ -1,0 +1,13 @@
+{
+  "sheet": [
+    {
+      "name": "name",
+      "question": "Bitte gib den Namen deines characters ein."
+    }
+  ],
+  "skills": [
+    "schnelligkeit",
+    "stärke",
+    "ausdauer"
+  ]
+}

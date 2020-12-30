@@ -16,7 +16,7 @@ public class MessageFormatter<E extends Context> {
 
 		for(int i = 0; i < values.length; i++) {
 			commands[i] = values[i];
-			commandHandlers[i] = Command.find(commands[i]);
+			commandHandlers[i] = Command.find(Context.class, commands[i]);
 		}
 	}
 

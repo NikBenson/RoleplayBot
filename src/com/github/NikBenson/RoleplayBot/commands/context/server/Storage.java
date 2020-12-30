@@ -11,6 +11,11 @@ import java.util.Map;
 public class Storage extends Command<ServerContext> {
 
 	@Override
+	public Class<ServerContext> getContext() {
+		return ServerContext.class;
+	}
+
+	@Override
 	public String getRegex() {
 		return "storage( ((put [a-zA-Z]*)|(take [a-zA-Z]*)))?";
 	}
