@@ -26,6 +26,12 @@ public class Skill extends Command<ServerContext> {
 		if(command.equals("skill list")) {
 			String list = "";
 
+			try {
+				list += String.format("**%s**\n\n", character.getAttribute(Character.getSheetAttribute(0)));
+			} catch (IndexOutOfBoundsException e) {
+
+			}
+
 			Map<String, Long> all = skills.getSkills();
 			long openPoints = skills.getOpenPoints();
 

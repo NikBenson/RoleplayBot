@@ -39,6 +39,7 @@ public class PlayerManager extends ListenerAdapter {
 	private PlayerManager(File configurationFile, JDA jda) {
 		this.configurationFile = configurationFile;
 		this.jda = jda;
+		jda.addEventListener(this);
 
 		try {
 			if(configurationFile.exists()) {

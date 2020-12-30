@@ -3,14 +3,16 @@ package com.github.NikBenson.RoleplayBot.commands;
 import com.github.NikBenson.RoleplayBot.commands.context.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Command<E extends Context> {
-	private static final List<Command> all = new LinkedList<>();
+	private static final Map<Class, List<Command>> all = new HashMap<>();
 
-	public static <T extends Context> Command<T> find(@NotNull String query) {
-		for (Command command : all) {
+	public static <T extends Context> Command<T> find(Class<T> context, @NotNull String query) {
+		for (Command command : all.get(context)) {
 			if(query.matches(command.getRegex())) {
 				return command;
 			}
@@ -18,9 +20,16 @@ public abstract class Command<E extends Context> {
 		return null;
 	}
 
-	public static void register(@NotNull Command command) {
-		for (Command existing : all) if(command.getClass().equals(existing.getClass())) return;
-		all.add(command);
+	public static <T extends Context> void register(Class<T> context, @NotNull Command<T> command) {
+		if(all.containsKey(context)) {
+			all.put(context, new LinkedList<>());
+		}
+
+		for (Command existing : all.get(context)) {
+			if(command.getClass().equals(existing.getClass())) return;
+		}
+
+		all.get(context).add(command);
 	}
 
 	public abstract String getRegex();

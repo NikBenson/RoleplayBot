@@ -1,7 +1,20 @@
-[
-  {
-    "name": "Tarnak",
-    "role": 793209258602790932,
-    "sheetChannel": 793209755253997578
-  }
-]
+{
+  "question": "Bitte gebe \"tarnak\", \"tenebris\" oder \"rudellos\" ein, um deinem charakter ein rudel zuzuweisen.",
+  "teams": [
+    {
+      "name": "tarnak",
+      "role": 793209258602790932,
+      "sheetChannel": 793209755253997578
+    },
+    {
+      "name": "tenebris",
+      "role": 793862629223170048,
+      "sheetChannel": 793862366748082177
+    },
+    {
+      "name": "rudellos",
+      "role": 793862760583659521,
+      "sheetChannel": 793862410678829066
+    }
+  ]
+}

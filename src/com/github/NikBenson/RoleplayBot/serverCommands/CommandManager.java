@@ -31,7 +31,7 @@ public class CommandManager extends ListenerAdapter {
 	private void onCommand(MessageReceivedEvent event) {
 		String query = event.getMessage().getContentRaw().substring(1);
 
-		Command<ServerContext> command = Command.find(query);
+		Command<ServerContext> command = Command.find(ServerContext.class, query);
 
 		if(command != null) {
 			ServerContext context = new ServerContext(event);
@@ -63,7 +63,7 @@ public class CommandManager extends ListenerAdapter {
 	private void onPrivateCommand(@NotNull PrivateMessageReceivedEvent event) {
 		String query = event.getMessage().getContentRaw().substring(1);
 
-		Command<PrivateContext> command = Command.find(query);
+		Command<PrivateContext> command = Command.find(PrivateContext.class, query);
 
 		if(command != null) {
 			PrivateContext context = new PrivateContext(event);
