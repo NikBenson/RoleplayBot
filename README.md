@@ -9,10 +9,12 @@ For now our features are:
 * Custom bot appearance
 * Welcome messages
 * A storage system for every text channel
+* A character management system with your character sheet pattern and skill system
 
 But we intend to add the following:
 * Food system
 * Player specific messages
+* A custumisable ```!man``` system
 
 Feel free to request features witch are not in this list. We will be pleased by your help.
 
