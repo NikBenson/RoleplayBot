@@ -17,6 +17,6 @@ public class IngameDay extends Command<Context> {
 
 	@Override
 	public String execute(String command, Context context) {
-		return String.valueOf(GameManager.getInstance().getDay());
+		return String.valueOf(GameManager.getInstanceOrCreate().getDay());
 	}
 }

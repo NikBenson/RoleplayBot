@@ -2,7 +2,7 @@ package com.github.NikBenson.RoleplayBot.commands.context.general;
 
 import com.github.NikBenson.RoleplayBot.commands.Command;
 import com.github.NikBenson.RoleplayBot.commands.context.Context;
-import com.github.NikBenson.RoleplayBot.roleplay.Season;
+import com.github.NikBenson.RoleplayBot.roleplay.seasons.Season;
 
 public class IngameLightLevel extends Command<Context> {
 

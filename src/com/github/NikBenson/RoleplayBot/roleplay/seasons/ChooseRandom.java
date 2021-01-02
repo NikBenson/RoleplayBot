@@ -1,4 +1,4 @@
-package com.github.NikBenson.RoleplayBot.roleplay;
+package com.github.NikBenson.RoleplayBot.roleplay.seasons;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

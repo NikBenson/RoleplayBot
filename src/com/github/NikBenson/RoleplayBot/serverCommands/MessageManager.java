@@ -14,8 +14,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.hooks.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class CommandManager extends ListenerAdapter {
-
+public class MessageManager extends ListenerAdapter {
 	@SubscribeEvent
 	@Override
 	public void onMessageReceived(@NotNull MessageReceivedEvent event) {

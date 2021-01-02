@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.util.Map;
 
 public class Storage extends Command<ServerContext> {
-
 	@Override
 	public Class<ServerContext> getContext() {
 		return ServerContext.class;
@@ -28,11 +27,11 @@ public class Storage extends Command<ServerContext> {
 			return listContent(channel);
 		} else if(command.startsWith("storage put")) {
 			String item = command.substring(11).trim().toLowerCase();
-			return String.format("**%s**: %d", item, StorageManager.addTo(channel , item));
+			return String.format("**%s**: %d", item, StorageManager.getInstance().addTo(channel , item));
 		} else if(command.startsWith("storage take")) {
 			String item = command.substring(13).trim().toLowerCase();
-			if(StorageManager.takeFrom(channel, item)) {
-				return String.format("**%s**: %d", item, StorageManager.getStorageFrom(channel , item));
+			if(StorageManager.getInstance().takeFrom(channel, item)) {
+				return String.format("**%s**: %d", item, StorageManager.getInstance().getStorageFrom(channel , item));
 			} else {
 				return String.format("**%s** not found.", item);
 			}
@@ -41,7 +40,7 @@ public class Storage extends Command<ServerContext> {
 	}
 
 	private String listContent(TextChannel channel) {
-		Map<String, Long> storage = StorageManager.getStorageFrom(channel);
+		Map<String, Long> storage = StorageManager.getInstance().getStorageFrom(channel);
 		String list = "";
 
 		for(String item : storage.keySet()) {

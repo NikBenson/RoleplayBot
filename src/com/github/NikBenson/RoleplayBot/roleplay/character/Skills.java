@@ -1,4 +1,4 @@
-package com.github.NikBenson.RoleplayBot.roleplay;
+package com.github.NikBenson.RoleplayBot.roleplay.character;
 
 import org.json.simple.JSONObject;
 
@@ -7,16 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Skills {
-	private static List<String> allSkills = new LinkedList<>();
-
-	public static List<String> getAllSkills() {
-		return allSkills;
-	}
-
-	public static void setAllSkills(List<String> allSkills) {
-		Skills.allSkills = allSkills;
-	}
-
 	private Map<String, Long> skills = new JSONObject();
 	private long openPoints = 0;
 
@@ -25,7 +15,7 @@ public class Skills {
 	}
 
 	public Skills() {
-		for (String skill : allSkills) {
+		for (String skill : SheetBlueprint.getInstanceOrCreate().getAllSkills()) {
 			skills.put(skill, 0l);
 		}
 	}
@@ -40,7 +30,7 @@ public class Skills {
 
 	public String add(String skill) {
 		if (openPoints > 0) return "no skill points!";
-		if (allSkills.contains(skill)) return "not a skill!";
+		if (SheetBlueprint.getInstanceOrCreate().getAllSkills().contains(skill)) return "not a skill!";
 
 		Long before = skills.get(skill);
 

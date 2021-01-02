@@ -1,4 +1,4 @@
-package com.github.NikBenson.RoleplayBot.roleplay;
+package com.github.NikBenson.RoleplayBot.roleplay.character;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Role;
@@ -10,30 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Team {
-	private static String question;
-
-	private static List<Team> all = new LinkedList<>();
-
-	public static List<Team> getAll() {
-		return all;
-	}
-
-	public static Team findTeam(String name) {
-		for(Team team : all) {
-			if(team.getName().equals(name)) {
-				return team;
-			}
-		}
-
-		return null;
-	}
-
-	public static void setQuestion(String question) {
-		Team.question = question;
-	}
-	public static String getQuestion() {
-		return question;
-	}
 
 	private final String name;
 	private final TextChannel sheetsChannel;
@@ -45,8 +21,6 @@ public class Team {
 		name = (String) json.get("name");
 		sheetsChannel = jda.getTextChannelById((Long) json.get("sheetChannel"));
 		role = jda.getRoleById((Long) json.get("role"));
-
-		all.add(this);
 	}
 
 	public String getName() {

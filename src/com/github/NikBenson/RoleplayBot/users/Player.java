@@ -1,8 +1,10 @@
 package com.github.NikBenson.RoleplayBot.users;
 
 import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
-import com.github.NikBenson.RoleplayBot.roleplay.Character;
-import com.github.NikBenson.RoleplayBot.roleplay.Team;
+import com.github.NikBenson.RoleplayBot.roleplay.character.Character;
+import com.github.NikBenson.RoleplayBot.roleplay.character.SheetBlueprint;
+import com.github.NikBenson.RoleplayBot.roleplay.character.Team;
+import com.github.NikBenson.RoleplayBot.roleplay.character.TeamsManager;
 import net.dv8tion.jda.api.entities.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,7 +25,7 @@ public class Player {
 
 	public Player(User user) {
 		userId = user.getId();
-		WelcomeMessenger.sendTo(user);
+		WelcomeMessenger.getInstanceOrCreate().sendTo(user);
 	}
 
 	public Player(JSONObject json) {
@@ -45,7 +47,7 @@ public class Player {
 	public String startCharacterCreation() {
 		characterCreationPhase = 0;
 		creatingCharacterSheet = new JSONObject();
-		return Team.getQuestion();
+		return TeamsManager.getInstance().getQuestion();
 	}
 	public void cancelCharacterCreation() {
 		characterCreationPhase = -1;
@@ -54,20 +56,19 @@ public class Player {
 	}
 	public String characterCreationAnswer(String answer) {
 		if(creatingCharacterTeam == null) {
-			creatingCharacterTeam = Team.findTeam(answer);
+			creatingCharacterTeam = TeamsManager.getInstance().findTeam(answer);
 
 			if(creatingCharacterTeam != null) {
-				System.out.println(String.format("%d => %s", characterCreationPhase, Character.getSheetQuestion(characterCreationPhase)));
-				return Character.getSheetQuestion(characterCreationPhase);
+				return SheetBlueprint.getInstanceOrCreate().getSheetQuestion(characterCreationPhase);
 			} else {
 				return "Invalid team. Please try again!";
 			}
 		} else {
-			creatingCharacterSheet.put(Character.getSheetAttribute(characterCreationPhase), answer);
+			creatingCharacterSheet.put(SheetBlueprint.getInstanceOrCreate().getSheetAttribute(characterCreationPhase), answer);
 			characterCreationPhase++;
 
-			if (Character.getSheetAttribute(characterCreationPhase) != null) {
-				return Character.getSheetQuestion(characterCreationPhase);
+			if (SheetBlueprint.getInstanceOrCreate().getSheetAttribute(characterCreationPhase) != null) {
+				return SheetBlueprint.getInstanceOrCreate().getSheetQuestion(characterCreationPhase);
 			} else {
 				characters.add(new Character(creatingCharacterSheet, creatingCharacterTeam));
 				cancelCharacterCreation();
@@ -79,7 +80,7 @@ public class Player {
 		return characterCreationPhase >= 0;
 	}
 
-	public JSONObject getJson() {
+	public JSONObject getJSON() {
 		JSONObject json = new JSONObject();
 
 		json.put("id", userId);

@@ -23,6 +23,6 @@ public class IngameTime extends Command<Context> {
 			pattern = command.substring(13, command.length() - 2);
 		}
 
-		return GameManager.getInstance().getTime(pattern);
+		return GameManager.getInstanceOrCreate().getTime(pattern);
 	}
 }

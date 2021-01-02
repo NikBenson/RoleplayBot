@@ -2,8 +2,9 @@ package com.github.NikBenson.RoleplayBot.commands.context.server;
 
 import com.github.NikBenson.RoleplayBot.commands.Command;
 import com.github.NikBenson.RoleplayBot.commands.context.ServerContext;
-import com.github.NikBenson.RoleplayBot.roleplay.Character;
-import com.github.NikBenson.RoleplayBot.roleplay.Skills;
+import com.github.NikBenson.RoleplayBot.roleplay.character.Character;
+import com.github.NikBenson.RoleplayBot.roleplay.character.SheetBlueprint;
+import com.github.NikBenson.RoleplayBot.roleplay.character.Skills;
 import com.github.NikBenson.RoleplayBot.users.Player;
 import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -29,10 +30,10 @@ public class Skill extends Command<ServerContext> {
 		Skills skills = character.getSkills();
 
 		if(command.equals("skill list")) {
-			String list = "";
+			StringBuilder list = new StringBuilder();
 
 			try {
-				list += String.format("**%s**\n\n", character.getAttribute(Character.getSheetAttribute(0)));
+				list.append(String.format("**%s**\n\n", character.getAttribute(SheetBlueprint.getInstanceOrCreate().getSheetAttribute(0))));
 			} catch (IndexOutOfBoundsException e) {
 
 			}
@@ -41,11 +42,11 @@ public class Skill extends Command<ServerContext> {
 			long openPoints = skills.getOpenPoints();
 
 			for(String skill : all.keySet()) {
-				list += String.format("**%s**: %d\n", skill, all.get(skill));
+				list.append(String.format("**%s**: %d\n", skill, all.get(skill)));
 			}
-			list += String.format("\n**open skill points**: %d", openPoints);
+			list.append(String.format("\n**open skill points**: %d", openPoints));
 
-			return list;
+			return list.toString();
 		} else if(command.endsWith(" add")) {
 			String skill = command.substring(6, command.length() - 4);
 
