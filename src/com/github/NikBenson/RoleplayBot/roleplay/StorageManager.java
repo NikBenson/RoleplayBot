@@ -41,23 +41,23 @@ public class StorageManager extends ListenerAdapter implements JSONConfigured {
 		}
 	}
 
-	public long addTo(TextChannel channel, String item) {
+	public long addTo(TextChannel channel, String item, long count) {
 		Map<String, Long> storage = getStorageOrCreateFrom(channel);
 
 		if(storage.containsKey(item)) {
-			storage.replace(item, storage.get(item) + 1);
+			storage.replace(item, storage.get(item) + count);
 		} else {
-			storage.put(item, 1l);
+			storage.put(item, count);
 		}
 
 		return storage.get(item);
 	}
 
-	public boolean takeFrom(TextChannel channel, String item) {
+	public boolean takeFrom(TextChannel channel, String item, long count) {
 		Map<String, Long> storage = getStorageOrCreateFrom(channel);
 
-		if(storage.containsKey(item)) {
-			storage.replace(item, storage.get(item) - 1);
+		if(storage.containsKey(item) && storage.get(item) >= count) {
+			storage.replace(item, storage.get(item) - count);
 
 			if(storage.get(item) <= 0) {
 				storage.remove(item);

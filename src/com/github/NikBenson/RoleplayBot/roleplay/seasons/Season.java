@@ -34,7 +34,7 @@ public class Season {
 		return getCurrent().getWeather();
 	}
 
-	public static void createSeasons(JSONArray json) {
+	public static void createSeasons(JSONArray json, long passedUpdates) {
 		all = new Season[json.size()];
 
 		for(int i = 0; i < all.length; i++) {
@@ -42,6 +42,8 @@ public class Season {
 		}
 
 		current = 0;
+
+		getCurrent().next(passedUpdates);
 	}
 
 	private final String name;
@@ -73,17 +75,22 @@ public class Season {
 				lightLevels.add(name);
 			}
 		}
-
-		generateValues();
 	}
 
 	private void next() {
-		if(++time > length) {
+		next(1l);
+	}
+	private void next(long delta) {
+		time += delta;
+		if(time > length) {
 			time = 1;
 
 			if(++current >= all.length) {
 				current = 0;
 			}
+			getCurrent().next(delta - length);
+		} else {
+			generateValues();
 		}
 	}
 	private void generateValues() {

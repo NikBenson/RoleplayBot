@@ -119,15 +119,18 @@ public class GameManager implements JSONConfigured {
 
 	@Override
 	public void loadFromJSON(JSONObject json) {
+		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
+
 		try {
-			startedAt = json.containsKey("startedAt")? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startedAt")) : Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
+			startedAt = json.containsKey("startedAt")? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startedAt")) : now;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		dayLengthInHours = (long) json.getOrDefault("dayLength", 24l);
 		refreshDelayInHours = (long) json.getOrDefault("refreshDelay", 6l);
 
-		Season.createSeasons((JSONArray) json.get("seasons"));
+		long passedUpdates = (now.getTime() - startedAt.getTime()) / (refreshDelayInHours*60*60*1000);
+		Season.createSeasons((JSONArray) json.get("seasons"), passedUpdates);
 
 		registerRefreshTimers();
 		calculateDay();

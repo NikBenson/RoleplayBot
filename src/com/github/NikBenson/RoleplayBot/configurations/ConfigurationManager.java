@@ -78,11 +78,8 @@ public class ConfigurationManager {
 
 	private void registerRepeatedMessages() {
 		File messagesDirectory = new File(configurationRootPath, ConfigurationPaths.REPEATED_MESSAGES_DIRECTORY);
-		System.out.println(messagesDirectory.getPath());
 		if (messagesDirectory.exists()) {
 			for (File messageFile : messagesDirectory.listFiles()) {
-				System.out.println(messageFile.getPath());
-
 				loadRepeatedMessageFromFile(messageFile);
 			}
 		}
@@ -97,7 +94,6 @@ public class ConfigurationManager {
 		}
 	}
 	private void loadRepeatedMessageFromJSON(JSONObject json) throws java.text.ParseException {
-		//TODO channel == null
 		TextChannel channel = jda.getTextChannelById((Long) json.get("channel"));
 		Date startAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startAt"));
 		long timeDelta = (long) json.get("timeDelta");
