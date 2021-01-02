@@ -1,5 +1,9 @@
 package com.github.NikBenson.RoleplayBot.roleplay;
 
+import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
+import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
+import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.roleplay.seasons.Season;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -12,22 +16,15 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.github.NikBenson.RoleplayBot.json.ConfigLoader.readJsonFromFile;
-
-public class GameManager {
+public class GameManager implements JSONConfigured {
 	private static GameManager instance;
 
-	public static GameManager getInstance() {
+	public static GameManager getInstanceOrCreate() {
+		if(instance == null) {
+			instance = new GameManager();
+		}
 		return instance;
 	}
-
-	public static GameManager setInstance(String configurationDirectoryPath) {
-		instance = new GameManager(configurationDirectoryPath);
-
-		return getInstance();
-	}
-
-	private final String configurationDirectoryPath;
 
 	private Date startedAt;
 	private long dayLengthInHours;
@@ -35,43 +32,16 @@ public class GameManager {
 	private Date currentDayStartedAt;
 	private long refreshDelayInHours;
 
-	private GameManager(String configurationDirectoryPath) {
-		this.configurationDirectoryPath = configurationDirectoryPath;
-
+	private GameManager() {
+		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
+		configurationManager.registerConfiguration(this);
 		try {
-			applyConfig();
+			configurationManager.load(this);
 		} catch (Exception e) {
-			System.out.println("Could not load gameconfig.json!");
 			e.printStackTrace();
 		}
 	}
 
-	private void applyConfig() throws ParseException {
-		JSONObject json = readConfigJson();
-
-		System.out.println("read config done!");
-
-		startedAt = json.containsKey("startedAt")? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startedAt")) : Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
-		dayLengthInHours = (long) json.getOrDefault("dayLength", 24l);
-		refreshDelayInHours = (long) json.getOrDefault("refreshDelay", 6l);
-
-		Season.createSeasons((JSONArray) json.get("seasons"));
-
-		registerRefreshTimers();
-		calculateDay();
-	}
-	private JSONObject readConfigJson() {
-		File file = new File(configurationDirectoryPath, "gameconfig.json");
-		if(file.exists()) {
-			try {
-				return readJsonFromFile(file);
-			} catch (Exception e) {
-				System.out.println("Could not load gameconfig.json!");
-				e.printStackTrace();
-			}
-		}
-		return new JSONObject();
-	}
 	private void registerRefreshTimers() {
 		Timer timer = new Timer();
 
@@ -135,5 +105,34 @@ public class GameManager {
 		Date time = new Date(deltaInMillisecond * 24*60*60*1000 / dayLengthInMilliseconds - (1000*60*60));
 
 		return new SimpleDateFormat(pattern).format(time);
+	}
+
+	@Override
+	public JSONObject getJSON() {
+		return null;
+	}
+
+	@Override
+	public File getConfigPath() {
+		return new File(ConfigurationManager.getInstance().getConfigurationRootPath(), ConfigurationPaths.GAME_CYCLE_FILE);
+	}
+
+	@Override
+	public void loadFromJSON(JSONObject json) {
+		Date now = Date.from(LocalDateTime.now().atZone(ZoneId.of("UTC")).toInstant());
+
+		try {
+			startedAt = json.containsKey("startedAt")? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) json.get("startedAt")) : now;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		dayLengthInHours = (long) json.getOrDefault("dayLength", 24l);
+		refreshDelayInHours = (long) json.getOrDefault("refreshDelay", 6l);
+
+		long passedUpdates = (now.getTime() - startedAt.getTime()) / (refreshDelayInHours*60*60*1000);
+		Season.createSeasons((JSONArray) json.get("seasons"), passedUpdates);
+
+		registerRefreshTimers();
+		calculateDay();
 	}
 }
