@@ -10,11 +10,11 @@ For now our features are:
 * Welcome messages
 * A storage system for every text channel
 * A character management system with your character sheet pattern, skill system and teams
+* A customisable `!man <manual>` system
 
 But we intend to add the following:
 * Food system
 * Player specific messages
-* A custumisable ```!man <manual>``` system
 
 Feel free to request features witch are not in this list. We will be pleased by your help.
 

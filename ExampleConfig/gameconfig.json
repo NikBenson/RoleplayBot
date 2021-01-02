@@ -4,11 +4,11 @@
   "refreshDelay": 24,
     "seasons": [
       {
-        "name": "Sommer",
+        "name": "Summer",
         "length": 16,
         "temperatures": [
         {
-          "name": "Kühl (0)",
+          "name": "Cold (0)",
           "probability": 0.1
         },
         {
@@ -22,33 +22,33 @@
       ],
       "lightLevels": [
         {
-          "name": "Dunkelheit",
+          "name": "Dark",
           "duration": 1
         },
         {
-          "name": "Dämmerung",
+          "name": "Discord",
           "duration": 1
         },
         {
-          "name": "Tag",
+          "name": "Day",
           "duration": 1
         },
         {
-          "name": "Dämmerung",
+          "name": "Discord",
           "duration": 1
         }
       ],
       "weathers": [
         {
-          "name": "Regen",
+          "name": "Rainy",
           "probability": 0.2
         },
         {
-          "name": "Windig",
+          "name": "Windy",
           "probability": 0.2
         },
         {
-          "name": "Trocken",
+          "name": "Dry",
           "probability": 0.6
         }
       ]

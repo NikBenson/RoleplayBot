@@ -6,6 +6,7 @@ import com.github.NikBenson.RoleplayBot.messages.RepeatedMessage;
 import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
 import com.github.NikBenson.RoleplayBot.roleplay.*;
 import com.github.NikBenson.RoleplayBot.roleplay.character.*;
+import com.github.NikBenson.RoleplayBot.serverCommands.ManualManager;
 import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -67,6 +68,7 @@ public class ConfigurationManager {
 	}
 
 	public void loadDefault() {
+		ManualManager.getInstanceOrCreate();
 		GameManager.getInstanceOrCreate();
 		SheetBlueprint.getInstanceOrCreate();
 		TeamsManager.createInstance(jda);

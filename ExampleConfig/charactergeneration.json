@@ -2,12 +2,16 @@
   "sheet": [
     {
       "name": "name",
-      "question": "Bitte gib den Namen deines characters ein."
+      "question": "Please enter the name of your character."
+    },
+    {
+      "name": "age",
+      "question": "Please enter the age of your character."
     }
   ],
   "skills": [
-    "schnelligkeit",
-    "stärke",
-    "ausdauer"
+    "speed",
+    "strength",
+    "intelligence"
   ]
 }

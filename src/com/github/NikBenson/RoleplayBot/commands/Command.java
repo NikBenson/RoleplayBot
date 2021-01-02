@@ -62,8 +62,10 @@ public abstract class Command<E extends Context> {
 		return (Command<T>) allHead.findCommand((Class<Context>) context, query);
 	}
 
-	public static <T extends Context> void register(@NotNull Command<T> command) {
-		allHead.addCommand((Command<Context>) command);
+	public static void register(@NotNull Command... commands) {
+		for(Command command : commands) {
+			allHead.addCommand((Command<Context>) command);
+		}
 	}
 
 	public abstract Class<E> getContext();

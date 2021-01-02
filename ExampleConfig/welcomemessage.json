@@ -1,4 +1,4 @@
 {
-  "message": "Hallo %s und herzlich wilkommen auf unserem Server.\n Bitte besuche diese Website um mehr über unser Projekt zu erfahren: [link]",
+  "message": "Hello %s and welcome to our server.",
   "values": ["player name"]
 }

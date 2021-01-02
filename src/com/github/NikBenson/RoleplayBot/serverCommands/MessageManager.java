@@ -15,6 +15,12 @@ import net.dv8tion.jda.api.hooks.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class MessageManager extends ListenerAdapter {
+	private final String COMMAND_PREFIX;
+
+	public MessageManager(String command_prefix) {
+		COMMAND_PREFIX = command_prefix;
+	}
+
 	@SubscribeEvent
 	@Override
 	public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -22,7 +28,7 @@ public class MessageManager extends ListenerAdapter {
 			Message message = event.getMessage();
 			String content = message.getContentRaw();
 
-			if(content.startsWith("!")) {
+			if(content.startsWith(COMMAND_PREFIX)) {
 				onCommand(event);
 			}
 		}
@@ -47,7 +53,7 @@ public class MessageManager extends ListenerAdapter {
 			Message message = event.getMessage();
 			String content = message.getContentRaw();
 
-			if (content.startsWith("!")) {
+			if (content.startsWith(COMMAND_PREFIX)) {
 				onPrivateCommand(event);
 			} else {
 				Player player = PlayerManager.getInstance().getPlayerOrCreate(event.getAuthor());

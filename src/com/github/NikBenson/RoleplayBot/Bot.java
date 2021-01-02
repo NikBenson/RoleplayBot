@@ -8,13 +8,11 @@ import com.github.NikBenson.RoleplayBot.commands.context.server.*;
 import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
-import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
 import com.github.NikBenson.RoleplayBot.serverCommands.MessageManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.Compression;
@@ -38,21 +36,22 @@ public class Bot extends ListenerAdapter {
 		new Bot(args[0]);
 	}
 	private static void registerCommands() {
-		Command.register(new DateNow());
-		Command.register(new IngameDay());
-		Command.register(new IngameSeason());
-		Command.register(new IngameLightLevel());
-		Command.register(new IngameWeather());
-		Command.register(new IngameTemperarture());
-		Command.register(new IngameTime());
-		Command.register(new PlayerName());
-		Command.register(new Storage());
-		Command.register(new Shutdown());
-		Command.register(new CreateCharacter());
-		Command.register(new CancelCharacter());
-		Command.register(new Skill());
-		Command.register(new Save());
-		Command.register(new Reload());
+		Command.register(new DateNow(),
+				new IngameDay(),
+				new IngameSeason(),
+				new IngameLightLevel(),
+				new IngameWeather(),
+				new IngameTemperarture(),
+				new IngameTime(),
+				new PlayerName(),
+				new Storage(),
+				new Shutdown(),
+				new CreateCharacter(),
+				new CancelCharacter(),
+				new Skill(),
+				new Save(),
+				new Reload(),
+				new Manual());
 	}
 
 
@@ -77,7 +76,7 @@ public class Bot extends ListenerAdapter {
 			e.printStackTrace();
 		}
 
-		jda.addEventListener(new MessageManager());
+		jda.addEventListener(new MessageManager("!"));
 	}
 
 	public File getConfigPath() {
