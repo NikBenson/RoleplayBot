@@ -24,7 +24,7 @@ import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
 
-import static com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager.readJsonFromFile;
+import static com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager.readJSONFromFile;
 
 public class Bot extends ListenerAdapter {
 	private JDA jda;
@@ -59,7 +59,7 @@ public class Bot extends ListenerAdapter {
 		this.configurationDirectoryPath = configurationDirectoryPath;
 
 		try {
-			loadFromJSON(readJsonFromFile(getConfigPath()));
+			loadFromJSON(readJSONFromFile(getConfigPath()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);

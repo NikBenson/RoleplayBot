@@ -15,23 +15,28 @@ public class RepeatedMessage extends TimerTask {
 	private final Date startingTime;
 	private final long period;
 
+	private final Timer timer;
+
 	public RepeatedMessage(@NotNull TextChannel channel, @NotNull MessageFormatter<Context> message, @NotNull Date startingTime, @NotNull long period) {
 		this.channel = channel;
 		this.message = message;
 		this.startingTime = startingTime;
 		this.period = period;
+		timer = new Timer();
 
 		startSchedule();
 	}
 
 	private void startSchedule() {
-		Timer timer = new Timer();
-
 		timer.schedule(
 				this,
 				startingTime,
 				period
 		);
+	}
+
+	public void stop() {
+		timer.cancel();
 	}
 
 	@Override
