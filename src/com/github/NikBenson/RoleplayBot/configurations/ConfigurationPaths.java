@@ -3,7 +3,7 @@ package com.github.NikBenson.RoleplayBot.configurations;
 public class ConfigurationPaths {
 	private ConfigurationPaths() {}
 
-	public static final String REPEATED_MESSAGES_DIRECTORY = "RepeatedMessages";
+	public static final String REPEATED_MESSAGES_DIRECTORY = "RepeatedMessages/";
 
 	public static final String BOT_INFO_FILE = "botinfo.json";
 	public static final String GAME_CYCLE_FILE = "gameconfig.json";
