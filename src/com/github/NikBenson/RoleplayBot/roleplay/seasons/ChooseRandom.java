@@ -3,34 +3,45 @@ package com.github.NikBenson.RoleplayBot.roleplay.seasons;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class ChooseRandom {
-	private double limit = 0;
+import java.util.LinkedList;
+import java.util.List;
 
-	private String[] names;
-	private double[] probabilities;
+public class ChooseRandom extends Cycled {
+	private double limit;
+
+	private List<Double> probabilities;
+
 
 	public ChooseRandom(JSONArray json) {
-		names = new String[json.size()];
-		probabilities = new double[json.size()];
-
-		for(int i = 0; i < json.size(); i++) {
-			JSONObject obj = (JSONObject) json.get(i);
-
-			names[i] = (String) obj.get("name");
-			probabilities[i] = (double) obj.get("probability");
-
-			limit += probabilities[i];
-		}
+		super(json);
 	}
 
-	public String get() {
+	@Override
+	protected void loadValues(JSONArray json) {
+		probabilities = new LinkedList<>();
+		super.loadValues(json);
+	}
+
+	@Override
+	protected void addValue(JSONObject json) {
+		super.addValue(json);
+
+		double probability = (double) json.getOrDefault("probability", 1d);
+		probabilities.add(probability);
+		limit += probability;
+	}
+
+	@Override
+	public void next() {
 		double random = Math.random() * limit;
 
 		int i;
-		for(i = 0; random >= 0; i++) {
-			random -= probabilities[i];
+		for (i = 0; random >= 0 && i < probabilities.size(); i++) {
+			random -= probabilities.get(i);
 		}
 
-		return names[i - 1];
+		System.out.println(limit);
+
+		setCurrent(i - 1);
 	}
 }

@@ -2,54 +2,73 @@
   "startedAt": "2020-11-30 01:00:00",
   "dayLength": 96,
   "refreshDelay": 24,
-    "seasons": [
-      {
-        "name": "Summer",
-        "length": 16,
-        "temperatures": [
+  "seasons": [
+    {
+      "name": "Summer",
+      "length": 16,
+      "values": [
         {
-          "name": "Cold (0)",
-          "probability": 0.1
+          "name": "season",
+          "type": "constant",
+          "value": "summer"
         },
         {
-          "name": "Normal (1)",
-          "probability": 0.4
+          "name": "temperature",
+          "type": "probability",
+          "values": [
+            {
+              "name": "Cold (0)",
+              "probability": 0.1
+            },
+            {
+              "name": "Normal (1)",
+              "probability": 0.4
+            },
+            {
+              "name": "Warm (2)",
+              "probability": 0.5
+            }
+          ]
         },
         {
-          "name": "Warm (2)",
-          "probability": 0.5
-        }
-      ],
-      "lightLevels": [
-        {
-          "name": "Dark",
-          "duration": 1
+          "name": "light level",
+          "type": "cyclic",
+          "values": [
+            {
+             "name": "Dark",
+              "duration": 1
+            },
+            {
+              "name": "Discord",
+              "duration": 1
+            },
+            {
+              "name": "Day",
+              "duration": 1
+            },
+            {
+              "name": "Discord",
+              "duration": 1
+            }
+          ]
         },
         {
-          "name": "Discord",
-          "duration": 1
-        },
-        {
-          "name": "Day",
-          "duration": 1
-        },
-        {
-          "name": "Discord",
-          "duration": 1
-        }
-      ],
-      "weathers": [
-        {
-          "name": "Rainy",
-          "probability": 0.2
-        },
-        {
-          "name": "Windy",
-          "probability": 0.2
-        },
-        {
-          "name": "Dry",
-          "probability": 0.6
+          "name": "weather",
+          "type": "probability",
+          "values": [
+            {
+              "name": "Rainy",
+              "probability": 0.2
+            },
+            {
+              "name": "Windy",
+              "probability": 0.2
+            },
+            {
+              "name": "Dry",
+              "probability": 0.6
+            }
+          ]
         }
       ]
     }

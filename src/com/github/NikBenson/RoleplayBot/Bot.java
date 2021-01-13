@@ -37,12 +37,7 @@ public class Bot extends ListenerAdapter {
 	}
 	private static void registerCommands() {
 		Command.register(new DateNow(),
-				new IngameDay(),
-				new IngameSeason(),
-				new IngameLightLevel(),
-				new IngameWeather(),
-				new IngameTemperarture(),
-				new IngameTime(),
+				new Ingame(),
 				new PlayerName(),
 				new Storage(),
 				new Shutdown(),
