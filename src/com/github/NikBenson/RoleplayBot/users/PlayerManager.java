@@ -3,6 +3,7 @@ package com.github.NikBenson.RoleplayBot.users;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
@@ -32,13 +33,7 @@ public class PlayerManager extends ListenerAdapter implements JSONConfigured {
 	private PlayerManager(JDA jda) {
 		jda.addEventListener(this);
 
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("players", this);
 	}
 
 	public Player getPlayerOrCreate(User user) {

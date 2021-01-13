@@ -1,4 +1,9 @@
 {
   "token": "YOUR BOT TOKEN HERE",
-  "playing": "God"
+  "playing": "God",
+  "modules": [
+    "gamecycle",
+    "storage",
+    "repeatedmessages"
+  ]
 }

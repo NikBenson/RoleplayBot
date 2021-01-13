@@ -3,6 +3,7 @@ package com.github.NikBenson.RoleplayBot.serverCommands;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -23,13 +24,7 @@ public class ManualManager implements JSONConfigured {
 	private Map<String, String> manuals = new HashMap<>();
 
 	private ManualManager() {
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("manual", this);
 	}
 
 	public String getManual(String query) {

@@ -3,6 +3,7 @@ package com.github.NikBenson.RoleplayBot.roleplay;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -32,13 +33,7 @@ public class StorageManager extends ListenerAdapter implements JSONConfigured {
 		JDA = jda;
 		jda.addEventListener(this);
 
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("storage", this);
 	}
 
 	public long addTo(TextChannel channel, String item, long count) {

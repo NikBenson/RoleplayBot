@@ -4,6 +4,7 @@ import com.github.NikBenson.RoleplayBot.commands.context.Context;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.json.simple.JSONArray;
@@ -38,13 +39,7 @@ public class RepeatedMessagesManager implements JSONConfigured {
 	private RepeatedMessagesManager(JDA jda) {
 		JDA = jda;
 
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("repeatedmessages", this);
 	}
 
 	@Override

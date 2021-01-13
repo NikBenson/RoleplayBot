@@ -4,6 +4,7 @@ import com.github.NikBenson.RoleplayBot.commands.context.UserContext;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import net.dv8tion.jda.api.entities.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -33,14 +34,7 @@ public class WelcomeMessenger implements JSONConfigured {
 	}
 
 	private WelcomeMessenger() {
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("welcomemessage", this);
 	}
 
 	@Override

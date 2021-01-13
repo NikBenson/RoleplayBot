@@ -38,6 +38,5 @@ public class Cycled {
     }
     protected void setCurrent(int i) {
         current = i;
-        System.out.println(String.format("%d => %s", current, get()));
     }
 }

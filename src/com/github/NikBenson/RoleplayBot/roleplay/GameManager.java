@@ -3,6 +3,7 @@ package com.github.NikBenson.RoleplayBot.roleplay;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import com.github.NikBenson.RoleplayBot.roleplay.seasons.Season;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -33,13 +34,7 @@ public class GameManager implements JSONConfigured {
 	private long refreshDelayInHours;
 
 	private GameManager() {
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("gamecycle", this);
 	}
 
 	private void registerRefreshTimers() {

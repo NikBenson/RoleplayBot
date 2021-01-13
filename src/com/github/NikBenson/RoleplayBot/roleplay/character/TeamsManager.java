@@ -3,6 +3,7 @@ package com.github.NikBenson.RoleplayBot.roleplay.character;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import net.dv8tion.jda.api.JDA;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,13 +36,7 @@ public class TeamsManager implements JSONConfigured {
 	private TeamsManager(JDA jda) {
 		JDA = jda;
 
-		ConfigurationManager configurationManager = ConfigurationManager.getInstance();
-		configurationManager.registerConfiguration(this);
-		try {
-			configurationManager.load(this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ModulesManager.registerModule("teams", this);
 	}
 
 	public List<Team> getAll() {

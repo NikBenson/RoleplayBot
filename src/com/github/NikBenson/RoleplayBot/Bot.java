@@ -8,7 +8,16 @@ import com.github.NikBenson.RoleplayBot.commands.context.server.*;
 import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
+import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
+import com.github.NikBenson.RoleplayBot.messages.RepeatedMessagesManager;
+import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
+import com.github.NikBenson.RoleplayBot.roleplay.GameManager;
+import com.github.NikBenson.RoleplayBot.roleplay.StorageManager;
+import com.github.NikBenson.RoleplayBot.roleplay.character.SheetBlueprint;
+import com.github.NikBenson.RoleplayBot.roleplay.character.TeamsManager;
+import com.github.NikBenson.RoleplayBot.serverCommands.ManualManager;
 import com.github.NikBenson.RoleplayBot.serverCommands.MessageManager;
+import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -18,6 +27,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.security.auth.login.LoginException;
@@ -28,6 +38,8 @@ import static com.github.NikBenson.RoleplayBot.configurations.ConfigurationManag
 
 public class Bot extends ListenerAdapter {
 	private JDA jda;
+
+	private JSONObject config;
 
 	private final String configurationDirectoryPath;
 
@@ -66,12 +78,30 @@ public class Bot extends ListenerAdapter {
 	@Override
 	public void onReady(@NotNull ReadyEvent event) {
 		try {
-			ConfigurationManager.setInstance(jda, configurationDirectoryPath).loadDefault();
+			ConfigurationManager.setInstance(jda, configurationDirectoryPath);
+			loadDefault();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+		JSONArray modules = (JSONArray) config.getOrDefault("modules", new JSONArray());
+		for (Object module : modules) {
+			String moduleName = (String) module;
+			ModulesManager.activateModules(moduleName);
+		}
+
 		jda.addEventListener(new MessageManager("!"));
+	}
+
+	public void loadDefault() {
+		ManualManager.getInstanceOrCreate();
+		GameManager.getInstanceOrCreate();
+		SheetBlueprint.getInstanceOrCreate();
+		TeamsManager.createInstance(jda);
+		PlayerManager.createInstance(jda);
+		WelcomeMessenger.getInstanceOrCreate();
+		StorageManager.createInstance(jda);
+		RepeatedMessagesManager.setInstance(jda);
 	}
 
 	public File getConfigPath() {
@@ -79,6 +109,7 @@ public class Bot extends ListenerAdapter {
 	}
 
 	public void loadFromJSON(JSONObject json) {
+		config = json;
 		if(jda == null) {
 			JDABuilder builder = JDABuilder.createDefault((String) json.get("token"));
 
