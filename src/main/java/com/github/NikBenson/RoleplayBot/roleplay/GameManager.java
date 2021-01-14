@@ -100,7 +100,7 @@ public class GameManager implements JSONConfigured {
 		long dayLengthInMilliseconds = dayLengthInHours * (1000 * 60 *60);
 		Date time = new Date(deltaInMillisecond * 24*60*60*1000 / dayLengthInMilliseconds);
 
-		return new SimpleDateFormat(pattern).format(time.toInstant().atZone(ZoneId.of("UTC")));
+		return new SimpleDateFormat(pattern).format(time);
 	}
 
 	@Override
