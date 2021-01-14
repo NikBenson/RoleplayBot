@@ -47,7 +47,7 @@ public class Bot extends ListenerAdapter {
 	public static void main(String[] args) {
 		registerCommands();
 
-		new Bot("D:\\RiseOfRudels");//args[0]);
+		new Bot(args[0]);
 	}
 	private static void registerCommands() {
 		Command.register(new DateNow(),

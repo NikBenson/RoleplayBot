@@ -5,7 +5,7 @@ import com.github.NikBenson.RoleplayBot.commands.context.Context;
 
 public class MessageFormatter<E extends Context> {
 	private String unformattedMessage;
-	private Command[] commandHandlers;
+	private Command<E>[] commandHandlers;
 	private String[] commands;
 
 	public MessageFormatter(String message, String... values) {
@@ -16,7 +16,7 @@ public class MessageFormatter<E extends Context> {
 
 		for(int i = 0; i < values.length; i++) {
 			commands[i] = values[i];
-			commandHandlers[i] = Command.find(Context.class, commands[i]);
+			commandHandlers[i] = (Command<E>) Command.find(Context.class, commands[i]);
 		}
 	}
 

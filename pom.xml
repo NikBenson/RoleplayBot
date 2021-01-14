@@ -15,7 +15,7 @@
 	<description>A discord bot to help with your RP-server</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>14</java.version>
         <start-class>com.github.NikBenson.RoleplayBot.Bot</start-class>
 	</properties>
 
@@ -66,6 +66,7 @@
 				<configuration>
 					<archive>
 						<manifest>
+							<addClasspath>true</addClasspath>
 							<mainClass>com.github.NikBenson.RoleplayBot.Bot</mainClass>
 						</manifest>
 					</archive>
