@@ -5,6 +5,7 @@ import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.configurations.JSONConfigured;
 import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
 import com.github.NikBenson.RoleplayBot.roleplay.seasons.Season;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -13,7 +14,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -109,7 +109,7 @@ public class GameManager implements JSONConfigured {
 	}
 
 	@Override
-	public File getConfigPath() {
+	public @NotNull File getConfigPath() {
 		return new File(ConfigurationManager.getInstance().getConfigurationRootPath(), ConfigurationPaths.GAME_CYCLE_FILE);
 	}
 
@@ -122,8 +122,8 @@ public class GameManager implements JSONConfigured {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		dayLengthInHours = (long) json.getOrDefault("dayLength", 24l);
-		refreshDelayInHours = (long) json.getOrDefault("refreshDelay", 6l);
+		dayLengthInHours = (long) json.getOrDefault("dayLength", 24L);
+		refreshDelayInHours = (long) json.getOrDefault("refreshDelay", 6L);
 
 		long passedUpdates = (now.getTime() - startedAt.getTime()) / (refreshDelayInHours*60*60*1000);
 		Season.createSeasons((JSONArray) json.get("seasons"), passedUpdates);

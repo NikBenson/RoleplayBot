@@ -20,6 +20,7 @@ public class ModulesManager {
                 configurationManager.load(module);
             } catch (Exception e) {
                 System.out.println("could not load module: " + moduleName);
+                e.printStackTrace();
             }
         }
     }

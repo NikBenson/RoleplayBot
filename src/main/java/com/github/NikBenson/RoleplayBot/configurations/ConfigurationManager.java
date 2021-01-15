@@ -90,9 +90,7 @@ public class ConfigurationManager {
 	}
 	public void load(JSONConfigured loadable) throws IOException, ParseException {
 		File configPath = loadable.getConfigPath();
-		if(configPath == null) {
-			loadable.loadFromJSON(null);
-		} else if(configPath.isDirectory()) {
+		if(configPath.isDirectory()) {
 			loadable.loadFromJSON(readJSONFromDirectory(loadable.getConfigPath()));
 		} else {
 			loadable.loadFromJSON(readJSONFromFile(loadable.getConfigPath()));
