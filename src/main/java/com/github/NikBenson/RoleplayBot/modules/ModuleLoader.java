@@ -16,6 +16,16 @@ public class ModuleLoader {
 		loadAll(modulesPath);
 	}
 
+	private void loadAll(File modulesPath) {
+		File[] modules = modulesPath.listFiles();
+		if(modules != null) {
+			for (File module : modules) {
+				createClassLoader(module);
+				tryLoad(module);
+			}
+		}
+	}
+
 	private void createClassLoader(File modulePath) {
 		URL url = createJarURL(modulePath);
 		classLoader = URLClassLoader.newInstance(new URL[]{url}, this.getClass().getClassLoader());
@@ -28,15 +38,6 @@ public class ModuleLoader {
 		}
 	}
 
-	private void loadAll(File modulesPath) {
-		File[] modules = modulesPath.listFiles();
-		if(modules != null) {
-			for (File module : modules) {
-				createClassLoader(module);
-				tryLoad(module);
-			}
-		}
-	}
 	private void tryLoad(File file) {
 		try {
 			load(file);

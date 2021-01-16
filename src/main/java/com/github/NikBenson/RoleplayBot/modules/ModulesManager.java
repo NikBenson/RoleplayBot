@@ -12,7 +12,6 @@ public class ModulesManager {
 
 	public static void registerModule(Class<? extends RoleplayBotModule> module) {
 		allModules.add(module);
-		System.out.printf("registered %s, size is now %d%n", module.getName(), allModules.size());
 	}
 
 	public static Set<Class<? extends RoleplayBotModule>> getActive(Guild guild) {
