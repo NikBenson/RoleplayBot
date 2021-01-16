@@ -4,8 +4,12 @@ public class ConfigurationPaths {
 	private ConfigurationPaths() {}
 
 	public static final String REPEATED_MESSAGES_DIRECTORY = "RepeatedMessages/";
+	public static final String MODULES_DIRECTORY = "modules/";
+	public static final String GUILDS_DIRECTORY = "guilds/";
 
 	public static final String BOT_INFO_FILE = "botinfo.json";
+
+	public static final String MODULES_FILE = "modules.json";
 	public static final String GAME_CYCLE_FILE = "gameconfig.json";
 	public static final String WELCOME_MESSAGE_FILE = "welcomemessage.json";
 	public static final String MANUALS_FILE = "manuals.json";
