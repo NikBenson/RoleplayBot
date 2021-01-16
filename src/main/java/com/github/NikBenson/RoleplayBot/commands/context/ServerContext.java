@@ -2,18 +2,10 @@ package com.github.NikBenson.RoleplayBot.commands.context;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class ServerContext extends Context {
-	Map<String, Object> params = new HashMap<>();
+public class ServerContext extends GuildContext {
 
 	public ServerContext(MessageReceivedEvent event) {
+		super(event.getGuild());
 		params.put("event", event);
-	}
-
-	@Override
-	public Map<String, Object> getParams() {
-		return params;
 	}
 }
