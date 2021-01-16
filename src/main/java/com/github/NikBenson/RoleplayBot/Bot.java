@@ -1,27 +1,20 @@
 package com.github.NikBenson.RoleplayBot;
 
-import com.github.NikBenson.RoleplayBot.api.RestApiManager;
 import com.github.NikBenson.RoleplayBot.commands.Command;
-import com.github.NikBenson.RoleplayBot.commands.context.general.*;
-import com.github.NikBenson.RoleplayBot.commands.context.privateMessage.CancelCharacter;
-import com.github.NikBenson.RoleplayBot.commands.context.privateMessage.CreateCharacter;
-import com.github.NikBenson.RoleplayBot.commands.context.server.*;
+import com.github.NikBenson.RoleplayBot.commands.context.general.DateNow;
+import com.github.NikBenson.RoleplayBot.commands.context.server.Reload;
+import com.github.NikBenson.RoleplayBot.commands.context.server.Save;
+import com.github.NikBenson.RoleplayBot.commands.context.server.Shutdown;
 import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
-import com.github.NikBenson.RoleplayBot.configurations.ModulesManager;
-import com.github.NikBenson.RoleplayBot.messages.RepeatedMessagesManager;
-import com.github.NikBenson.RoleplayBot.messages.WelcomeMessenger;
-import com.github.NikBenson.RoleplayBot.roleplay.GameManager;
-import com.github.NikBenson.RoleplayBot.roleplay.StorageManager;
-import com.github.NikBenson.RoleplayBot.roleplay.character.SheetBlueprint;
-import com.github.NikBenson.RoleplayBot.roleplay.character.TeamsManager;
-import com.github.NikBenson.RoleplayBot.serverCommands.ManualManager;
+import com.github.NikBenson.RoleplayBot.modules.ModuleLoader;
+import com.github.NikBenson.RoleplayBot.modules.ModulesManager;
 import com.github.NikBenson.RoleplayBot.serverCommands.MessageManager;
-import com.github.NikBenson.RoleplayBot.users.PlayerManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -40,8 +33,6 @@ import static com.github.NikBenson.RoleplayBot.configurations.ConfigurationManag
 public class Bot extends ListenerAdapter {
 	private JDA jda;
 
-	private JSONObject config;
-
 	private final String configurationDirectoryPath;
 
 	public static void main(String[] args) {
@@ -51,24 +42,17 @@ public class Bot extends ListenerAdapter {
 	}
 	private static void registerCommands() {
 		Command.register(new DateNow(),
-				new Ingame(),
 				new PlayerName(),
-				new Storage(),
 				new Shutdown(),
-				new CreateCharacter(),
-				new CancelCharacter(),
-				new Skill(),
 				new Save(),
-				new Reload(),
-				new Manual());
+				new Reload());
 	}
-
 
 	private Bot(String configurationDirectoryPath) {
 		this.configurationDirectoryPath = configurationDirectoryPath;
 
 		try {
-			loadFromJSON(readJSONFromFile(getConfigPath()));
+			loadFromJSON((JSONObject) readJSONFromFile(getConfigPath()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -81,30 +65,31 @@ public class Bot extends ListenerAdapter {
 	public void onReady(@NotNull ReadyEvent event) {
 		try {
 			ConfigurationManager.setInstance(jda, configurationDirectoryPath);
-			loadDefault();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		JSONArray modules = (JSONArray) config.getOrDefault("modules", new JSONArray());
-		for (Object module : modules) {
-			String moduleName = (String) module;
-			ModulesManager.activateModules(moduleName);
-		}
+		new ModuleLoader(new File(configurationDirectoryPath, ConfigurationPaths.MODULES_DIRECTORY));
+		loadConfigs();
 
-		jda.addEventListener(new MessageManager("!"));
+		jda.addEventListener(new MessageManager('!'));
 	}
+	private void loadConfigs() {
+		File guildsDirectory = new File(configurationDirectoryPath, ConfigurationPaths.GUILDS_DIRECTORY);
+		File[] guilds = guildsDirectory.listFiles();
+		if(guilds != null) {
+			for (File guildDirectory : guilds) {
+				try {
+					String guildId = guildDirectory.getName();
+					Guild guild = jda.getGuildById(guildId);
+					JSONArray modules = (JSONArray) readJSONFromFile(new File(guildDirectory, ConfigurationPaths.MODULES_FILE));
 
-	public void loadDefault() {
-		ManualManager.getInstanceOrCreate();
-		GameManager.getInstanceOrCreate();
-		SheetBlueprint.getInstanceOrCreate();
-		TeamsManager.createInstance(jda);
-		PlayerManager.createInstance(jda);
-		WelcomeMessenger.getInstanceOrCreate();
-		StorageManager.createInstance(jda);
-		RepeatedMessagesManager.setInstance(jda);
-		ModulesManager.registerModule("api", new RestApiManager());
+					ModulesManager.activateModules(guild, (String[]) modules.toArray(new String[0]));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public File getConfigPath() {
@@ -112,7 +97,6 @@ public class Bot extends ListenerAdapter {
 	}
 
 	public void loadFromJSON(JSONObject json) {
-		config = json;
 		if(jda == null) {
 			JDABuilder builder = JDABuilder.createDefault((String) json.get("token"));
 
