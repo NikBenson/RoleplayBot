@@ -84,7 +84,7 @@ public class Bot extends ListenerAdapter {
 					Guild guild = jda.getGuildById(guildId);
 					JSONArray modules = (JSONArray) readJSONFromFile(new File(guildDirectory, ConfigurationPaths.MODULES_FILE));
 
-					ModulesManager.activateModules(guild, (String[]) modules.toArray(new String[modules.size()]));
+					ModulesManager.activateModules(guild, (String[]) modules.toArray(new String[0]));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
