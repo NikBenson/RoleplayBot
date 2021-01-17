@@ -73,9 +73,9 @@ public class ModuleLoader {
 		} catch (ClassNotFoundException e) {
 			System.out.printf("Could not load %s%n", name);
 			e.printStackTrace();
-		}
+		} catch (NoClassDefFoundError ignored) {}
 	}
-	private void loadClass(String name) throws ClassNotFoundException {
+	private void loadClass(String name) throws ClassNotFoundException, NoClassDefFoundError {
 		Class<?> uncheckedClass = Class.forName(name, true, classLoader);
 
 		checkClassAndLoad(uncheckedClass);
