@@ -9,7 +9,7 @@ public class GuildContext extends Context {
 	protected Map<String, Object> params = new HashMap<>();
 
 	public GuildContext(Guild guild) {
-		params.put("event", guild);
+		params.put("guild", guild);
 	}
 
 	@Override
