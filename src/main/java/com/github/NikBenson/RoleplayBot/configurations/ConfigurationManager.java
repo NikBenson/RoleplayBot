@@ -119,7 +119,6 @@ public class ConfigurationManager {
 		}
 	}
 	private void saveFile(File file, String content) throws IOException {
-		System.out.println(file.getAbsoluteFile());
 		if (!file.exists()) {
 			file.createNewFile();
 		}

@@ -8,9 +8,9 @@ import com.github.NikBenson.RoleplayBot.commands.context.server.Shutdown;
 import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
+import com.github.NikBenson.RoleplayBot.messages.InputManager;
 import com.github.NikBenson.RoleplayBot.modules.ModuleLoader;
 import com.github.NikBenson.RoleplayBot.modules.ModulesManager;
-import com.github.NikBenson.RoleplayBot.serverCommands.MessageManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -31,14 +31,14 @@ import java.io.IOException;
 import static com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager.readJSONFromFile;
 
 public class Bot extends ListenerAdapter {
-	private JDA jda;
-
-	private final String configurationDirectoryPath;
+	private static Bot instance;
 
 	public static void main(String[] args) {
-		registerCommands();
+		if(instance == null) {
+			registerCommands();
 
-		new Bot(args[0]);
+			instance = new Bot(args[0]);
+		}
 	}
 	private static void registerCommands() {
 		Command.register(new DateNow(),
@@ -47,6 +47,14 @@ public class Bot extends ListenerAdapter {
 				new Save(),
 				new Reload());
 	}
+
+	public static JDA getJDA() {
+		return instance.jda;
+	}
+
+	private JDA jda;
+
+	private final String configurationDirectoryPath;
 
 	private Bot(String configurationDirectoryPath) {
 		this.configurationDirectoryPath = configurationDirectoryPath;
@@ -71,8 +79,6 @@ public class Bot extends ListenerAdapter {
 
 		new ModuleLoader(new File(configurationDirectoryPath, ConfigurationPaths.MODULES_DIRECTORY));
 		loadConfigs();
-
-		jda.addEventListener(new MessageManager('!'));
 	}
 	private void loadConfigs() {
 		File guildsDirectory = new File(configurationDirectoryPath, ConfigurationPaths.GUILDS_DIRECTORY);
@@ -104,6 +110,8 @@ public class Bot extends ListenerAdapter {
 			builder.setBulkDeleteSplittingEnabled(false);
 			builder.setCompression(Compression.NONE);
 			builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+
+			builder.addEventListeners(new InputManager((String) json.getOrDefault("prefix", "!")));
 
 			if (json.containsKey("playing")) {
 				builder.setActivity(Activity.playing((String) json.get("playing")));

@@ -4,11 +4,11 @@ import com.github.NikBenson.RoleplayBot.commands.Command;
 import com.github.NikBenson.RoleplayBot.commands.context.Context;
 
 public class MessageFormatter<E extends Context> {
-	private String unformattedMessage;
-	private Command<E>[] commandHandlers;
-	private String[] commands;
+	private final String unformattedMessage;
+	private final Command<E>[] commandHandlers;
+	private final String[] commands;
 
-	public MessageFormatter(String message, String... values) {
+	public MessageFormatter(Class<E> context, String message, String... values) {
 		unformattedMessage = message;
 
 		commands = new String[values.length];
@@ -16,7 +16,7 @@ public class MessageFormatter<E extends Context> {
 
 		for(int i = 0; i < values.length; i++) {
 			commands[i] = values[i];
-			commandHandlers[i] = (Command<E>) Command.find(Context.class, commands[i]);
+			commandHandlers[i] = Command.find(context, commands[i]);
 		}
 	}
 
@@ -25,7 +25,7 @@ public class MessageFormatter<E extends Context> {
 	}
 
 	private String formatMessage(E context) {
-		return String.format(unformattedMessage, executeCommands(context));
+		return String.format(unformattedMessage, (Object[]) executeCommands(context));
 	}
 
 	private String[] executeCommands(E context) {
