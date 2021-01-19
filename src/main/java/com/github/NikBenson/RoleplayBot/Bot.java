@@ -1,10 +1,13 @@
 package com.github.NikBenson.RoleplayBot;
 
 import com.github.NikBenson.RoleplayBot.commands.Command;
+import com.github.NikBenson.RoleplayBot.commands.context.GuildMessageContext;
+import com.github.NikBenson.RoleplayBot.commands.context.PrivateMessageContext;
+import com.github.NikBenson.RoleplayBot.commands.context.cli.ReloadModules;
+import com.github.NikBenson.RoleplayBot.commands.context.cli.Shutdown;
 import com.github.NikBenson.RoleplayBot.commands.context.general.DateNow;
-import com.github.NikBenson.RoleplayBot.commands.context.server.Reload;
-import com.github.NikBenson.RoleplayBot.commands.context.server.Save;
-import com.github.NikBenson.RoleplayBot.commands.context.server.Shutdown;
+import com.github.NikBenson.RoleplayBot.commands.context.guild.Reload;
+import com.github.NikBenson.RoleplayBot.commands.context.guild.Save;
 import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
@@ -14,14 +17,12 @@ import com.github.NikBenson.RoleplayBot.modules.ModulesManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.jetbrains.annotations.NotNull;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.security.auth.login.LoginException;
@@ -45,7 +46,13 @@ public class Bot extends ListenerAdapter {
 				new PlayerName(),
 				new Shutdown(),
 				new Save(),
-				new Reload());
+				new Reload(),
+				new ReloadModules());
+
+		try {
+			new GuildMessageContext(null);
+			new PrivateMessageContext(null);
+		} catch (Exception ignored) {}
 	}
 
 	public static JDA getJDA() {
@@ -72,30 +79,13 @@ public class Bot extends ListenerAdapter {
 	@Override
 	public void onReady(@NotNull ReadyEvent event) {
 		try {
-			ConfigurationManager.setInstance(jda, configurationDirectoryPath);
+			ConfigurationManager.setInstance(configurationDirectoryPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		new ModuleLoader(new File(configurationDirectoryPath, ConfigurationPaths.MODULES_DIRECTORY));
-		loadConfigs();
-	}
-	private void loadConfigs() {
-		File guildsDirectory = new File(configurationDirectoryPath, ConfigurationPaths.GUILDS_DIRECTORY);
-		File[] guilds = guildsDirectory.listFiles();
-		if(guilds != null) {
-			for (File guildDirectory : guilds) {
-				try {
-					String guildId = guildDirectory.getName();
-					Guild guild = jda.getGuildById(guildId);
-					JSONArray modules = (JSONArray) readJSONFromFile(new File(guildDirectory, ConfigurationPaths.MODULES_FILE));
-
-					ModulesManager.activateModules(guild, (String[]) modules.toArray(new String[0]));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		ModulesManager.reload();
 	}
 
 	public File getConfigPath() {

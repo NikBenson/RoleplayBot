@@ -6,4 +6,5 @@ public interface RoleplayBotModule {
 	boolean isActive(Guild guild);
 	void load(Guild guild);
 	void unload(Guild guild);
+	Guild[] getLoaded();
 }
