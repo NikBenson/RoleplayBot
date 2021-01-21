@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +19,6 @@ public class ModulesManager {
 	private static final Set<RoleplayBotModule> activeModules = new HashSet<>();
 
 	public static void registerModule(Class<? extends RoleplayBotModule> module) {
-		allModules.remove(module);
 		allModules.add(module);
 	}
 
@@ -106,10 +106,10 @@ public class ModulesManager {
 		System.out.printf("could not load module: %s%n", name);
 		return false;
 	}
-	private static void loadModuleFromClass(Guild guild, @NotNull Class<? extends RoleplayBotModule> moduleClass) throws IllegalAccessException, InstantiationException {
+	private static void loadModuleFromClass(Guild guild, @NotNull Class<? extends RoleplayBotModule> moduleClass) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 		RoleplayBotModule module = getLoadedModule(moduleClass);
 		if(module == null) {
-			module = moduleClass.newInstance();
+			module = moduleClass.getDeclaredConstructor().newInstance();
 			activeModules.add(module);
 		}
 		module.load(guild);

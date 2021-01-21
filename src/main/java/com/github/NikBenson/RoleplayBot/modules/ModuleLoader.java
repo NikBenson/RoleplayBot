@@ -13,6 +13,8 @@ public class ModuleLoader {
 	ClassLoader classLoader;
 
 	public ModuleLoader(File modulesPath) {
+		classLoader = getClass().getClassLoader();
+
 		loadAll(modulesPath);
 	}
 
@@ -28,7 +30,7 @@ public class ModuleLoader {
 
 	private void createClassLoader(File modulePath) {
 		URL url = createJarURL(modulePath);
-		classLoader = URLClassLoader.newInstance(new URL[]{url}, this.getClass().getClassLoader());
+		classLoader = URLClassLoader.newInstance(new URL[]{url}, classLoader);
 	}
 	private URL createJarURL(File path) {
 		try {
@@ -76,7 +78,7 @@ public class ModuleLoader {
 		} catch (NoClassDefFoundError ignored) {}
 	}
 	private void loadClass(String name) throws ClassNotFoundException, NoClassDefFoundError {
-		Class<?> uncheckedClass = Class.forName(name, true, classLoader);
+		Class<?> uncheckedClass = classLoader.loadClass(name);
 
 		checkClassAndLoad(uncheckedClass);
 	}
