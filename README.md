@@ -1,5 +1,7 @@
 # RoleplayBot - Discord RPs the better way
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2034c17657744a89bfe1a21623e96e0f)](https://app.codacy.com/gh/NikBenson/RoleplayBot?utm_source=github.com&utm_medium=referral&utm_content=NikBenson/RoleplayBot&utm_campaign=Badge_Grade)
+
 Hello and welcome. In the following document we will guide you through the features and configuration of our discord bot.
 
 ## Features
