@@ -6,12 +6,15 @@ import com.github.NikBenson.RoleplayBot.commands.context.PrivateMessageContext;
 import com.github.NikBenson.RoleplayBot.commands.context.cli.ReloadModules;
 import com.github.NikBenson.RoleplayBot.commands.context.cli.Shutdown;
 import com.github.NikBenson.RoleplayBot.commands.context.general.DateNow;
+import com.github.NikBenson.RoleplayBot.commands.context.guild.ModuleLoad;
+import com.github.NikBenson.RoleplayBot.commands.context.guild.ModuleUnload;
 import com.github.NikBenson.RoleplayBot.commands.context.guild.Reload;
 import com.github.NikBenson.RoleplayBot.commands.context.guild.Save;
 import com.github.NikBenson.RoleplayBot.commands.context.user.PlayerName;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationManager;
 import com.github.NikBenson.RoleplayBot.configurations.ConfigurationPaths;
 import com.github.NikBenson.RoleplayBot.messages.InputManager;
+import com.github.NikBenson.RoleplayBot.modules.ModuleConfig;
 import com.github.NikBenson.RoleplayBot.modules.ModuleLoader;
 import com.github.NikBenson.RoleplayBot.modules.ModulesManager;
 import net.dv8tion.jda.api.JDA;
@@ -47,7 +50,10 @@ public class Bot extends ListenerAdapter {
 				new Shutdown(),
 				new Save(),
 				new Reload(),
-				new ReloadModules());
+				new ReloadModules(),
+				new ModuleLoad(),
+				new ModuleUnload()
+		);
 
 		try {
 			new GuildMessageContext(null);
@@ -85,7 +91,7 @@ public class Bot extends ListenerAdapter {
 		}
 
 		new ModuleLoader(new File(configurationDirectoryPath, ConfigurationPaths.MODULES_DIRECTORY));
-		ModulesManager.reload();
+		ModuleConfig.loadModules();
 	}
 
 	public File getConfigPath() {
