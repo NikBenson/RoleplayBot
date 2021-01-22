@@ -1,33 +1,26 @@
-# RoleplayBot - Discord RPs the better way
+# Real Open source Role play Bot - Discord RPs the better way
 
-Hello and welcome. In the following document we will guide you through the features and configuration of our discord bot.
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2034c17657744a89bfe1a21623e96e0f)](https://app.codacy.com/gh/NikBenson/RoleplayBot?utm_source=github.com&utm_medium=referral&utm_content=NikBenson/RoleplayBot&utm_campaign=Badge_Grade)
 
-## Features
-For now our features are:
-* A customisable game cycle
-* Messages send with your pattern
-* Custom bot appearance
-* Welcome messages
-* A storage system for every text channel
-* A character management system with your character sheet pattern, skill system and teams
-* A customisable `!man <manual>` system
+Hello and welcome. In the following document we will guide you through the features and first usage of our discord bot.
 
-But we intend to add the following:
-* Food system
-* Player specific messages
+## What is ROR Bot
+ROR Bot is a module based discord bot to make your RP server much more customizable. You can activate modules per server and use them. We provide you some official modules, but you can easily [create new ones](https://github.com/NikBenson/RoleplayBot/wiki/How-to-create-modules) if you know the basics of java.
 
-Feel free to request features witch are not in this list. We will be pleased by your help.
+## Official modules
+*   [A customisable game cycle](https://github.com/NikBenson/RoleplayBot-modules-GameCycle)
+*   [Messages send with your pattern](https://github.com/NikBenson/RoleplayBot-modules-RepeatedMesages)
+*   [Welcome messages](https://github.com/NikBenson/RoleplayBot-modules-WelcomeMessage)
+*   [A storage system for every text channel](https://github.com/NikBenson/RoleplayBot-modules-Storage)
+*   [A character management system with your character sheet pattern, skill system and teams](https://github.com/NikBenson/RoleplayBot-modules-Player)
+*   [A customisable `!man <manual>` system](https://github.com/NikBenson/RoleplayBot-modules-Manual)
 
-## Configuration
-The configuration files are in json format. You will understand it quite fast by looking in the [ExampleConfig](https://github.com/NikBenson/RoleplayBot/tree/main/ExampleConfig) directory.
-You will find the documentation of the values in the [Wiki](https://github.com/NikBenson/RoleplayBot/wiki/Configuration).
+We intend to upgrade the above constantly and add new ones. Feel free to request features witch are not already re. We will be pleased by your help. Please do so by the issue tool.
 
-One special thing you need to do is registering the bot at the [Developer Portal](https://discord.com/developers/).
-Please generate a token for your bot and add it to your botinfo.json.
-You also have to enable Bot > Privileged Gateway Intents > presence intent.
+## Getting started
+In order to use this bot you have to find a hosted version of this bot or host it on your own. In the case you find a hosted version make sure they provide all the modules you need.  
+We will host one with all the official modules soon.
 
-The last step to go is to start the bot. In order to do, so you have to run the RoleplayBot.jar from the wanted release and execute it with the following command:
-```shell
-java -jar /path/to/RoleplayBot.jar /path/of/your/configuration/directory
-```
-Please make sure to use absolute not relative paths.
+To create a self hosted ROR Bot please refer to the [Set up your own ROR Bot Wiki](https://github.com/NikBenson/RoleplayBot/wiki/Set-up-your-own-ROR-Bot).
+
+Afterwards please refer to the [How to manage modules](https://github.com/NikBenson/RoleplayBot/wiki/How-to-manage-modules) guide.
