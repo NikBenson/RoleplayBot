@@ -4,18 +4,18 @@ import com.github.nikbenson.roleplaybot.commands.Command;
 import com.github.nikbenson.roleplaybot.commands.context.GuildMessageContext;
 import com.github.nikbenson.roleplaybot.commands.context.PrivateMessageContext;
 import com.github.nikbenson.roleplaybot.commands.context.cli.ReloadModules;
-import com.github.nikbenson.roleplaybot.commands.context.cli.Shutdown;
-import com.github.nikbenson.roleplaybot.commands.context.general.DateNow;
 import com.github.nikbenson.roleplaybot.commands.context.guild.ModuleLoad;
 import com.github.nikbenson.roleplaybot.commands.context.guild.ModuleUnload;
 import com.github.nikbenson.roleplaybot.commands.context.guild.Reload;
-import com.github.nikbenson.roleplaybot.commands.context.guild.Save;
 import com.github.nikbenson.roleplaybot.commands.context.user.PlayerName;
 import com.github.nikbenson.roleplaybot.configurations.ConfigurationManager;
 import com.github.nikbenson.roleplaybot.configurations.ConfigurationPaths;
 import com.github.nikbenson.roleplaybot.messages.InputManager;
-import com.github.nikbenson.roleplaybot.modules.ModuleConfig;
 import com.github.nikbenson.roleplaybot.modules.ModuleLoader;
+import com.github.nikbenson.roleplaybot.commands.context.cli.Shutdown;
+import com.github.nikbenson.roleplaybot.commands.context.general.DateNow;
+import com.github.nikbenson.roleplaybot.commands.context.guild.Save;
+import com.github.nikbenson.roleplaybot.modules.ModuleConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -30,8 +30,6 @@ import org.json.simple.JSONObject;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-
-import static com.github.nikbenson.roleplaybot.configurations.ConfigurationManager.readJSONFromFile;
 
 public class Bot extends ListenerAdapter {
 	private static Bot instance;
@@ -72,7 +70,7 @@ public class Bot extends ListenerAdapter {
 		this.configurationDirectoryPath = configurationDirectoryPath;
 
 		try {
-			loadFromJSON((JSONObject) readJSONFromFile(getConfigPath()));
+			loadFromJSON((JSONObject) ConfigurationManager.readJSONFromFile(getConfigPath()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);

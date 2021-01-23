@@ -1,7 +1,7 @@
 package com.github.nikbenson.roleplaybot.messages;
 
-import com.github.nikbenson.roleplaybot.commands.Command;
 import com.github.nikbenson.roleplaybot.commands.context.Context;
+import com.github.nikbenson.roleplaybot.commands.Command;
 
 public class MessageFormatter<E extends Context> {
 	private final String unformattedMessage;

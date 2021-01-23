@@ -1,8 +1,8 @@
 package com.github.nikbenson.roleplaybot.messages;
 
-import com.github.nikbenson.roleplaybot.commands.Command;
 import com.github.nikbenson.roleplaybot.commands.context.CLIContext;
 import com.github.nikbenson.roleplaybot.commands.context.GuildMessageContext;
+import com.github.nikbenson.roleplaybot.commands.Command;
 import com.github.nikbenson.roleplaybot.commands.context.PrivateMessageContext;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.PrivateChannel;

@@ -1,8 +1,8 @@
 package com.github.nikbenson.roleplaybot.commands.context.cli;
 
-import com.github.nikbenson.roleplaybot.commands.Command;
 import com.github.nikbenson.roleplaybot.commands.context.CLIContext;
 import com.github.nikbenson.roleplaybot.configurations.ConfigurationManager;
+import com.github.nikbenson.roleplaybot.commands.Command;
 
 public class ReloadModules extends Command<CLIContext> {
 	@Override
