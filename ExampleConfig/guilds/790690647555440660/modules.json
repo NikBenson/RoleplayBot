@@ -1,5 +1,1 @@
-[
-  "gamecycle",
-  "storage",
-  "repeatedmessages"
-]
+{"loaded":["com.github.nikbenson.roleplaybot.modules.gamecycle.GameCycleModule","com.github.nikbenson.roleplaybot.modules.repeatedmessages.RepeatedMessagesModule","com.github.NikBenson.roleplaybot.modules.player.PlayerModule","com.github.nikbenson.roleplaybot.modules.welcomemessage.WelcomeMessageModule","com.github.nikbenson.roleplaybot.modules.storage.StorageModule","com.github.nikbenson.roleplaybot.modules.manual.ManualModule"]}

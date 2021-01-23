@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: com.github.NikBenson.RoleplayBot.Bot
+Main-Class: com.github.nikbenson.roleplaybot.Bot
