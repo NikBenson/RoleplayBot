@@ -11,7 +11,7 @@
 
 	<properties>
 		<java.version>14</java.version>
-        <start-class>com.github.NikBenson.RoleplayBot.Bot</start-class>
+        <start-class>com.github.nikbenson.roleplaybot.Bot</start-class>
 	</properties>
 
 	<dependencies>
@@ -49,7 +49,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.github.NikBenson.RoleplayBot.Bot</mainClass>
+							<mainClass>com.github.nikbenson.roleplaybot.Bot</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
