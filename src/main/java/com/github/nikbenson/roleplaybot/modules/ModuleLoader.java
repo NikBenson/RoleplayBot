@@ -10,7 +10,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ModuleLoader {
-	ClassLoader classLoader;
+	private ClassLoader classLoader;
 
 	public ModuleLoader(File modulesPath) {
 		classLoader = getClass().getClassLoader();
