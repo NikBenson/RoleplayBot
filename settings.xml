@@ -20,7 +20,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub NikBenson Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/OWNER/REPOSITORY</url>
+                    <url>https://maven.pkg.github.com/NikBenson/RoleplayBot</url>
                 </repository>
             </repositories>
         </profile>
