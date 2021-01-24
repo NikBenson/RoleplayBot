@@ -80,9 +80,7 @@ public class ModulesManager {
 			try {
 				loadModuleFromClass(guild, module);
 				return true;
-			} catch (Exception ignored) {
-				ignored.printStackTrace();
-			}
+			} catch (Exception ignored) {}
 		}
 
 		System.out.printf("could not load module: %s%n", name);

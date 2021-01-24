@@ -64,4 +64,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub NikBenson Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/NikBenson/RoleplayBot</url>
+		</repository>
+	</distributionManagement>
 </project>
