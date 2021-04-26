@@ -58,6 +58,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -70,6 +71,10 @@
 				<executions>
 					<execution>
 						<id>github</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -79,7 +84,7 @@
 	<distributionManagement>
 		<repository>
 			<id>github</id>
-			<name>GitHub NikBenson Apache Maven Packages</name>
+			<name>GitHub Packages</name>
 			<url>https://maven.pkg.github.com/NikBenson/RoleplayBot</url>
 		</repository>
 	</distributionManagement>
