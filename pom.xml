@@ -3,8 +3,8 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
-	<groupId>com.github.NikBenson</groupId>
-	<artifactId>RoleplayBot</artifactId>
+	<groupId>com.github.nikbenson</groupId>
+	<artifactId>roleplaybot</artifactId>
 	<version>78.66.0</version>
 	<name>RoleplayBot</name>
 	<description>A discord bot to help with your RP-server</description>
