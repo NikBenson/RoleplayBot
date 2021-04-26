@@ -5,7 +5,7 @@
 	<packaging>jar</packaging>
 	<groupId>com.github.nikbenson</groupId>
 	<artifactId>roleplaybot</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<name>RoleplayBot</name>
 	<description>A discord bot to help with your RP-server</description>
 
